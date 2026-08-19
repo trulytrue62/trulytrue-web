@@ -1,13 +1,6 @@
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
 import { RouteGuard } from "@/components/auth/route-guard"
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+import { DynamicBreadcrumbs } from "@/components/sidebar/dynamic-breadcrumbs"
 import { Separator } from "@/components/ui/separator"
 import {
     SidebarInset,
@@ -27,19 +20,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
                             orientation="vertical"
                             className="mr-2 data-[orientation=vertical]:h-4 "
                         />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block">
-                                    <BreadcrumbLink href="#">
-                                        Build Your Application
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator className="hidden md:block" />
-                                <BreadcrumbItem>
-                                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
+                        <DynamicBreadcrumbs />
                     </div>
                 </header>
                 <div className="h-full w-full p-4  bg-red-50">
