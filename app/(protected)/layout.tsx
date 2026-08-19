@@ -33,7 +33,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
                         </Button>
                     </div>
                 </header>
-                <div className="h-full w-full p-4 bg-muted/50">
+                <div className="h-full w-full p-4 bg-muted/20">
                     <RouteGuard>{children}</RouteGuard>
                 </div>
             </SidebarInset>
