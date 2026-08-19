@@ -4,6 +4,7 @@ import Image from "next/image"
 import logo from '@/public/logo.png'
 
 
+
 export function Brand({ className }: { className?: string }) {
   return (
     <div className={cn("flex items-center gap-2", className)}>

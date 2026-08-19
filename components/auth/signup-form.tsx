@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { signupContent } from "@/content/signup"
+import { Brand } from "../brand"
 
 export function SignupForm({
   className,
@@ -23,9 +24,8 @@ export function SignupForm({
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">{signupContent.title}</CardTitle>
-          <CardDescription>{signupContent.description}</CardDescription>
+        <CardHeader className="justify-center">
+           <Brand />
         </CardHeader>
         <CardContent>
           <form>

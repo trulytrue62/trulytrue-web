@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { loginContent } from "@/content/login"
+import { Brand } from "../brand"
 
 export function LoginForm({
   className,
@@ -56,9 +57,8 @@ export function LoginForm({
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">{loginContent.title}</CardTitle>
-          <CardDescription>{loginContent.description}</CardDescription>
+        <CardHeader className="justify-center">
+           <Brand />
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -116,7 +116,7 @@ export function LoginForm({
                   {loginContent.submitLabel}
                 </Button>
                 <FieldDescription className="text-center">
-                  {loginContent.signupPrompt} <a href="#">{loginContent.signupLink}</a>
+                  {loginContent.signupPrompt} <a href="/signup">{loginContent.signupLink}</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
