@@ -23,7 +23,7 @@ export function NavItems({
   items: {
     title: string
     url: string
-    icon?: React.ReactNode
+    icon?: React.ElementType
     isActive?: boolean
     items?: {
       title: string
@@ -45,7 +45,7 @@ export function NavItems({
             <CollapsibleTrigger
               render={<SidebarMenuButton tooltip={item.title} />}
             >
-              {item.icon}
+              {item.icon && <item.icon />}
               <span>{item.title}</span>
               <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-open/collapsible:rotate-90" />
             </CollapsibleTrigger>
