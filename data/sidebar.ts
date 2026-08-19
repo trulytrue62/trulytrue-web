@@ -4,11 +4,10 @@ import type { SidebarItem } from "@/types/sidebar"
 
 export const navItems: SidebarItem[] = [
   {
-    name: "Home",
+    name: "Dashboard",
     icon: SquareTerminal,
-    route: "/",
+    route: "/dashboard",
     roles: ["admin", "user"],
-
   },
   {
     name: "---Admin",

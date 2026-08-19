@@ -12,8 +12,8 @@ export default function Page({ children }: { children: React.ReactNode }) {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <SidebarInset >
+                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b">
                     <div className="flex items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1" />
                         <Separator
@@ -23,7 +23,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
                         <DynamicBreadcrumbs />
                     </div>
                 </header>
-                <div className="h-full w-full p-4  bg-red-50">
+                <div className="h-full w-full p-4 bg-muted/50">
                     <RouteGuard>{children}</RouteGuard>
                 </div>
             </SidebarInset>

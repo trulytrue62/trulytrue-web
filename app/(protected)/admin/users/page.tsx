@@ -1,3 +1,3 @@
 export default function AdminUsersPage() {
-  return <div>Users</div>
+  return <div>User Management</div>
 }
