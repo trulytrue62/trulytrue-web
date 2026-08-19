@@ -1,4 +1,6 @@
-import { AudioWaveform, GalleryVerticalEnd, BookOpen, Bot, Command, Frame, PieChart, Settings2, SquareTerminal } from "lucide-react"
+import { AudioWaveform, Bot, Command, Frame, GalleryVerticalEnd, PieChart, Settings2, SquareTerminal } from "lucide-react"
+
+import type { SidebarItem } from "@/types/sidebar"
 
 export const data = {
   user: {
@@ -23,93 +25,29 @@ export const data = {
       plan: "Free",
     },
   ],
-  navMain: [
+  navItems: [
     {
-      title: "Playground",
-      url: "#",
+      name: "Home",
       icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      route: "/",
+      roles: ["admin", "user"],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
+      name: "Admin",
       icon: Settings2,
+      route: "/admin",
+      isNew: true,
+      roles: ["admin"],
       items: [
         {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
+          name: "Users",
+          icon: Bot,
+          route: "/admin/users",
+          roles: ["admin"],
         },
       ],
     },
-  ],
+  ] as SidebarItem[],
   projects: [
     {
       name: "Design Engineering",
