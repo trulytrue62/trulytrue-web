@@ -36,7 +36,12 @@ const SUGGESTIONS = [
 const PLACEHOLDER_REPLY =
   "🟡 SUSPICIOUS — real-time checking isn't wired up yet, this is a placeholder result. Once live, this will combine community reports and AI analysis and explain why."
 
-export function CheckInput() {
+  interface CheckInputProps {
+    showSuggestions?  : boolean
+    placeholderText? : string
+  }
+
+export function CheckInput({showSuggestions = true,placeholderText = ''} : CheckInputProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [attachment, setAttachment] = useState<File | null>(null)
@@ -129,7 +134,7 @@ export function CheckInput() {
         <Input
           value={input}
           onChange={(event) => setInput(event.target.value)}
-          placeholder=""
+          placeholder={placeholderText}
           className="flex-1 border-none bg-transparent shadow-none focus-visible:ring-0"
         />
         <Button type="submit" size="icon">
@@ -137,7 +142,7 @@ export function CheckInput() {
         </Button>
       </form>
 
-      {messages.length === 0 && (
+      {messages.length === 0 && showSuggestions &&  (
         <div className="flex flex-nowrap justify-center gap-2">
           {SUGGESTIONS.map((suggestion) => (
             <Button

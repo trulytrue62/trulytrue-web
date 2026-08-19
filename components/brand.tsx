@@ -18,7 +18,7 @@ export function Brand({ className }: { className?: string }) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <Logo />
-      <span className="truncate text-sm font-medium">TruelyTrue</span>
+      <span className="truncate text-sm font-medium">TrulyTrue</span>
     </div>
   )
 }

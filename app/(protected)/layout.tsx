@@ -1,6 +1,10 @@
+import Link from "next/link"
+import { FlagIcon } from "lucide-react"
+
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
 import { RouteGuard } from "@/components/auth/route-guard"
 import { DynamicBreadcrumbs } from "@/components/sidebar/dynamic-breadcrumbs"
+import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import {
     SidebarInset,
@@ -13,7 +17,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset >
-                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b">
+                <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b">
                     <div className="flex items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1" />
                         <Separator
@@ -21,6 +25,12 @@ export default function Page({ children }: { children: React.ReactNode }) {
                             className="mr-2 data-[orientation=vertical]:h-4 "
                         />
                         <DynamicBreadcrumbs />
+                    </div>
+                    <div className="px-4">
+                        <Button render={<Link href="/report" />}>
+                            <FlagIcon />
+                            Report
+                        </Button>
                     </div>
                 </header>
                 <div className="h-full w-full p-4 bg-muted/50">
