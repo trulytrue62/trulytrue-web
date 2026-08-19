@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 
 import { Forbidden } from "@/components/utils"
-import { data } from "@/data/sidebar"
+import { navItems } from "@/data/sidebar"
 import { findItemPath } from "@/lib/sidebar"
 
 export function RouteGuard({ children }: { children: React.ReactNode }) {
@@ -13,7 +13,7 @@ export function RouteGuard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
 
-  const path = findItemPath(data.navItems, pathname)
+  const path = findItemPath(navItems, pathname)
   const allowedRoles = path?.at(-1)?.roles
   const role = session?.user?.role
   const isForbidden = Boolean(

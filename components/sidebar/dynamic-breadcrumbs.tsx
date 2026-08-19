@@ -11,12 +11,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { data } from "@/data/sidebar"
+import { navItems } from "@/data/sidebar"
 import { findItemPath } from "@/lib/sidebar"
 
 export function DynamicBreadcrumbs() {
   const pathname = usePathname()
-  const path = findItemPath(data.navItems, pathname)
+  const path = findItemPath(navItems, pathname)
 
   if (!path) {
     return null
