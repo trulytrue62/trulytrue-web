@@ -1,3 +1,9 @@
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -20,6 +26,32 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter()
+  const [error, setError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setError(null)
+    setIsSubmitting(true)
+
+    const formData = new FormData(event.currentTarget)
+    const result = await signIn("credentials", {
+      email: formData.get("email"),
+      password: formData.get("password"),
+      redirect: false,
+    })
+
+    setIsSubmitting(false)
+
+    if (!result || result.error) {
+      setError("Invalid email or password")
+      return
+    }
+
+    router.push("/")
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -30,7 +62,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <FieldGroup>
               <Field>
                 <Button variant="outline" type="button">
@@ -59,6 +91,7 @@ export function LoginForm({
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   required
@@ -74,10 +107,13 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" name="password" type="password" required />
               </Field>
+              {error && <p className="text-sm text-destructive">{error}</p>}
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Signing in..." : "Login"}
+                </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <a href="#">Sign up</a>
                 </FieldDescription>
