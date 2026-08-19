@@ -2,8 +2,8 @@
 
 import * as React from "react"
 
-import { NavUser } from "@/components/sidebar/nav-user"
-import { SidebarBrand } from "@/components/sidebar/sidebar-header"
+import { SidebarUser } from "@/components/sidebar/sidebar-user"
+import { SidebarBrand } from "@/components/sidebar/sidebar-brand"
 import { SidebarNav } from "@/components/sidebar/sidebar-item"
 import {
   Sidebar,
@@ -25,7 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarNav items={navItems} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <SidebarUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

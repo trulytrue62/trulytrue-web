@@ -36,7 +36,7 @@ function initials(name?: string | null) {
     .toUpperCase()
 }
 
-export function NavUser() {
+export function SidebarUser() {
   const { isMobile } = useSidebar()
   const { data: session } = useSession()
   const user = session?.user
