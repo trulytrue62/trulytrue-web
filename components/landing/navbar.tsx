@@ -11,7 +11,7 @@ export function LandingNavbar() {
   const { data: session } = useSession()
 
   return (
-    <header className="flex items-center justify-between border-b px-6 py-4">
+    <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/80 px-6 py-4 backdrop-blur">
       <Link href="/">
         <Brand />
       </Link>

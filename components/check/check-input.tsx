@@ -1,13 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import {
-  ArrowUpIcon,
-  LinkIcon,
-  MailIcon,
-  MessageSquareIcon,
-  PhoneIcon,
-} from "lucide-react"
+import { useRef, useState } from "react"
+import { ArrowUpIcon, PaperclipIcon, XIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -17,27 +11,24 @@ type Message = {
   id: number
   role: "user" | "assistant"
   content: string
+  attachment?: string
 }
 
 const SUGGESTIONS = [
   {
-    label: "Check a phone number",
-    icon: PhoneIcon,
+    description: "Check a phone number",
     example: "+91 98765 43210",
   },
   {
-    label: "Check a link",
-    icon: LinkIcon,
-    example: "http://bit.ly/free-prize",
+    description: "Check a link",
+    example: "bit.ly/claim-prize",
   },
   {
-    label: "Check an email",
-    icon: MailIcon,
+    description: "Check an email",
     example: "support@bank-verify.com",
   },
   {
-    label: "Check a message",
-    icon: MessageSquareIcon,
+    description: "Check a message",
     example: "You've won a lottery, click here to claim",
   },
 ]
@@ -48,19 +39,27 @@ const PLACEHOLDER_REPLY =
 export function CheckInput() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
+  const [attachment, setAttachment] = useState<File | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   function submit(value: string) {
     const trimmed = value.trim()
-    if (!trimmed) {
+    if (!trimmed && !attachment) {
       return
     }
 
     setMessages((prev) => [
       ...prev,
-      { id: prev.length, role: "user", content: trimmed },
+      {
+        id: prev.length,
+        role: "user",
+        content: trimmed || "(screenshot only, no message)",
+        attachment: attachment?.name,
+      },
       { id: prev.length + 1, role: "assistant", content: PLACEHOLDER_REPLY },
     ])
     setInput("")
+    setAttachment(null)
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -79,44 +78,78 @@ export function CheckInput() {
                 "max-w-[80%] rounded-2xl px-4 py-2.5 text-sm",
                 message.role === "user"
                   ? "self-end bg-primary text-primary-foreground"
-                  : "bg-muted"
+                  : "border bg-card"
               )}
             >
+              {message.attachment && (
+                <div className="mb-1 flex items-center gap-1 text-xs opacity-80">
+                  <PaperclipIcon className="size-3" />
+                  {message.attachment}
+                </div>
+              )}
               {message.content}
             </div>
           ))}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="relative w-full">
+      {attachment && (
+        <div className="flex w-fit items-center gap-2 rounded-full border bg-card py-1.5 pr-2 pl-3 text-xs">
+          <PaperclipIcon className="size-3.5" />
+          <span className="max-w-40 truncate">{attachment.name}</span>
+          <button
+            type="button"
+            onClick={() => setAttachment(null)}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <XIcon className="size-3.5" />
+          </button>
+        </div>
+      )}
+
+      <form
+        onSubmit={handleSubmit}
+        className="flex w-full items-center gap-1 rounded-3xl border bg-background p-2 shadow-sm"
+      >
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(event) => setAttachment(event.target.files?.[0] ?? null)}
+        />
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <PaperclipIcon />
+        </Button>
         <Input
           value={input}
           onChange={(event) => setInput(event.target.value)}
-          placeholder="Paste a phone number, URL, email, UPI ID, or message to check"
-          className="h-14 rounded-3xl px-5 pr-14 text-base shadow-sm"
+          placeholder=""
+          className="flex-1 border-none bg-transparent shadow-none focus-visible:ring-0"
         />
-        <Button
-          type="submit"
-          size="icon"
-          className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full"
-        >
+        <Button type="submit" size="icon">
           <ArrowUpIcon />
         </Button>
       </form>
 
       {messages.length === 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-nowrap justify-center gap-2">
           {SUGGESTIONS.map((suggestion) => (
             <Button
-              key={suggestion.label}
+              key={suggestion.example}
               type="button"
               variant="outline"
               size="sm"
               className="rounded-full"
+              aria-label={suggestion.description}
               onClick={() => submit(suggestion.example)}
             >
-              <suggestion.icon />
-              {suggestion.label}
+              {suggestion.example}
             </Button>
           ))}
         </div>
