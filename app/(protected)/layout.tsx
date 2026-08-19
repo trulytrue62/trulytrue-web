@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
+import { RouteGuard } from "@/components/auth/route-guard"
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -42,7 +43,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
                     </div>
                 </header>
                 <div className="h-full w-full p-4  bg-red-50">
-                    {children}
+                    <RouteGuard>{children}</RouteGuard>
                 </div>
             </SidebarInset>
         </SidebarProvider>
