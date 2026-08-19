@@ -1,4 +1,5 @@
 import { CheckInput } from "@/components/check/check-input"
+import { checkInputContent } from "@/content/check-input"
 
 export default function DashboardLayout({
   trending,
@@ -11,14 +12,15 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex flex-col gap-4">
-      <CheckInput showSuggestions={false} placeholderText="  Paste a phone number, link, email, UPI ID, message or upload a
-          screenshot to check it against community reports."/>
+      <CheckInput
+        showSuggestions={false}
+        placeholderText={checkInputContent.description}
+      />
       <div className="grid gap-4 lg:grid-cols-2">
         {trending}
         {reported}
         <div className="lg:col-span-2">{regional}</div>
       </div>
     </div>
-
   )
 }

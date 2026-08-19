@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { trendingScamTypes } from "@/data/mock/intelligence"
+import { dashboardContent } from "@/content/dashboard"
 
 const TREND_ICON = {
   up: TrendingUpIcon,
@@ -26,10 +27,8 @@ export default function TrendingScamTypesSlot() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Trending scam types</CardTitle>
-        <CardDescription>
-          Categories with the most reports right now
-        </CardDescription>
+        <CardTitle>{dashboardContent.trending.title}</CardTitle>
+        <CardDescription>{dashboardContent.trending.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ul className="divide-y">

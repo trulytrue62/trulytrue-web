@@ -14,6 +14,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { signupContent } from "@/content/signup"
 
 export function SignupForm({
   className,
@@ -23,58 +24,58 @@ export function SignupForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Create your account</CardTitle>
-          <CardDescription>
-            Enter your email below to create your account
-          </CardDescription>
+          <CardTitle className="text-xl">{signupContent.title}</CardTitle>
+          <CardDescription>{signupContent.description}</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                <Input id="name" type="text" placeholder="John Doe" required />
+                <FieldLabel htmlFor="name">{signupContent.nameLabel}</FieldLabel>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder={signupContent.namePlaceholder}
+                  required
+                />
               </Field>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">{signupContent.emailLabel}</FieldLabel>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder={signupContent.emailPlaceholder}
                   required
                 />
               </Field>
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <FieldLabel htmlFor="password">
+                      {signupContent.passwordLabel}
+                    </FieldLabel>
                     <Input id="password" type="password" required />
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
+                      {signupContent.confirmPasswordLabel}
                     </FieldLabel>
                     <Input id="confirm-password" type="password" required />
                   </Field>
                 </Field>
-                <FieldDescription>
-                  Must be at least 8 characters long.
-                </FieldDescription>
+                <FieldDescription>{signupContent.passwordHint}</FieldDescription>
               </Field>
               <Field>
-                <Button type="submit">Create Account</Button>
+                <Button type="submit">{signupContent.submitLabel}</Button>
                 <FieldDescription className="text-center">
-                  Already have an account? <a href="/login">Sign in</a>
+                  {signupContent.loginPrompt}{" "}
+                  <a href="/login">{signupContent.loginLink}</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
           </form>
         </CardContent>
       </Card>
-      {/* <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </FieldDescription> */}
     </div>
   )
 }

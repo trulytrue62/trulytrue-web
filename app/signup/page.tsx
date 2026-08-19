@@ -1,6 +1,7 @@
 import { GalleryVerticalEnd } from "lucide-react"
 
 import { SignupForm } from "@/components/auth/signup-form"
+import { siteContent } from "@/content/site"
 
 export default function SignupPage() {
   return (
@@ -10,7 +11,7 @@ export default function SignupPage() {
           <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          TrulyTrue
+          {siteContent.name}
         </a>
         <SignupForm />
       </div>

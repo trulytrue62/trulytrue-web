@@ -1,0 +1,17 @@
+export const loginContent = {
+  title: "Welcome back",
+  description: "Login with your Apple or Google account",
+  appleButton: "Login with Apple",
+  googleButton: "Login with Google",
+  dividerText: "Or continue with",
+  emailLabel: "Email",
+  passwordLabel: "Password",
+  forgotPassword: "Forgot your password?",
+  submitLabel: "Login",
+  errorMessage: "Invalid email or password",
+  signupPrompt: "Don't have an account?",
+  signupLink: "Sign up",
+  termsNotice: "By clicking continue, you agree to our",
+  termsLink: "Terms of Service",
+  privacyLink: "Privacy Policy",
+}

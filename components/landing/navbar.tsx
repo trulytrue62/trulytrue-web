@@ -6,6 +6,7 @@ import { FlagIcon, LayoutDashboardIcon, LogInIcon } from "lucide-react"
 
 import { Brand } from "@/components/brand"
 import { Button } from "@/components/ui/button"
+import { navbarContent } from "@/content/navbar"
 
 export function LandingNavbar() {
   const { data: session } = useSession()
@@ -21,11 +22,11 @@ export function LandingNavbar() {
           render={<Link href={session ? "/dashboard" : "/login"} />}
         >
           {session ? <LayoutDashboardIcon /> : <LogInIcon />}
-          {session ? "Dashboard" : "Login"}
+          {session ? navbarContent.dashboardLabel : navbarContent.loginLabel}
         </Button>
         <Button render={<Link href="/report" />}>
           <FlagIcon />
-          Report
+          {navbarContent.reportLabel}
         </Button>
       </nav>
     </header>

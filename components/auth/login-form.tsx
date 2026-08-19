@@ -21,6 +21,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { loginContent } from "@/content/login"
 
 export function LoginForm({
   className,
@@ -45,7 +46,7 @@ export function LoginForm({
     setIsSubmitting(false)
 
     if (!result || result.error) {
-      setError("Invalid email or password")
+      setError(loginContent.errorMessage)
       return
     }
 
@@ -56,10 +57,8 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>
-            Login with your Apple or Google account
-          </CardDescription>
+          <CardTitle className="text-xl">{loginContent.title}</CardTitle>
+          <CardDescription>{loginContent.description}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -72,7 +71,7 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Login with Apple
+                  {loginContent.appleButton}
                 </Button>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -81,14 +80,14 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Login with Google
+                  {loginContent.googleButton}
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or continue with
+                {loginContent.dividerText}
               </FieldSeparator>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">{loginContent.emailLabel}</FieldLabel>
                 <Input
                   id="email"
                   name="email"
@@ -99,23 +98,25 @@ export function LoginForm({
               </Field>
               <Field>
                 <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel htmlFor="password">
+                    {loginContent.passwordLabel}
+                  </FieldLabel>
                   <a
                     href="#"
                     className="ml-auto text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    {loginContent.forgotPassword}
                   </a>
                 </div>
                 <Input id="password" name="password" type="password" required />
               </Field>
               {error && <p className="text-sm text-destructive">{error}</p>}
               <Field>
-                <Button type="submit" isSaving = {isSubmitting}>
-                 Login
+                <Button type="submit" isSaving={isSubmitting}>
+                  {loginContent.submitLabel}
                 </Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
+                  {loginContent.signupPrompt} <a href="#">{loginContent.signupLink}</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>
@@ -123,8 +124,9 @@ export function LoginForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        {loginContent.termsNotice}{" "}
+        <a href="#">{loginContent.termsLink}</a>{" "}
+        and <a href="#">{loginContent.privacyLink}</a>.
       </FieldDescription>
     </div>
   )

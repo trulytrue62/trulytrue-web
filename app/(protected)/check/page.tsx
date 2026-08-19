@@ -1,19 +1,15 @@
-import { CheckInput } from '@/components/check/check-input'
-import React from 'react'
+import { CheckInput } from "@/components/check/check-input"
+import { checkInputContent } from "@/content/check-input"
 
-const CheckPage = () => {
-    return (
-        <div className='w-full h-full flex flex-col gap-4 items-center justify-center'>
-            <p className=" text-md text-muted-foreground">
-                Paste a phone number, link, email, UPI ID, message or upload a
-                screenshot to check it against community reports.
-            </p>
-            <div className='max-w-2xl'>
-                <CheckInput />
-            </div>
-
-        </div>
-    )
+export default function CheckPage() {
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center gap-4">
+      <p className="text-md text-muted-foreground">
+        {checkInputContent.description}
+      </p>
+      <div className="max-w-2xl">
+        <CheckInput />
+      </div>
+    </div>
+  )
 }
-
-export default CheckPage

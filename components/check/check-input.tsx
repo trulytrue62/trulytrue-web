@@ -6,6 +6,7 @@ import { ArrowUpIcon, PaperclipIcon, XIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { checkInputContent } from "@/content/check-input"
 
 type Message = {
   id: number
@@ -13,28 +14,6 @@ type Message = {
   content: string
   attachment?: string
 }
-
-const SUGGESTIONS = [
-  {
-    description: "Check a phone number",
-    example: "+91 98765 43210",
-  },
-  {
-    description: "Check a link",
-    example: "bit.ly/claim-prize",
-  },
-  {
-    description: "Check an email",
-    example: "support@bank-verify.com",
-  },
-  {
-    description: "Check a message",
-    example: "You've won a lottery, click here to claim",
-  },
-]
-
-const PLACEHOLDER_REPLY =
-  "🟡 SUSPICIOUS — real-time checking isn't wired up yet, this is a placeholder result. Once live, this will combine community reports and AI analysis and explain why."
 
   interface CheckInputProps {
     showSuggestions?  : boolean
@@ -58,10 +37,14 @@ export function CheckInput({showSuggestions = true,placeholderText = ''} : Check
       {
         id: prev.length,
         role: "user",
-        content: trimmed || "(screenshot only, no message)",
+        content: trimmed || checkInputContent.noMessageFallback,
         attachment: attachment?.name,
       },
-      { id: prev.length + 1, role: "assistant", content: PLACEHOLDER_REPLY },
+      {
+        id: prev.length + 1,
+        role: "assistant",
+        content: checkInputContent.placeholderReply,
+      },
     ])
     setInput("")
     setAttachment(null)
@@ -144,7 +127,7 @@ export function CheckInput({showSuggestions = true,placeholderText = ''} : Check
 
       {messages.length === 0 && showSuggestions &&  (
         <div className="flex flex-nowrap justify-center gap-2">
-          {SUGGESTIONS.map((suggestion) => (
+          {checkInputContent.suggestions.map((suggestion) => (
             <Button
               key={suggestion.example}
               type="button"

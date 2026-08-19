@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
+import { statesContent } from "@/content/states"
 
 type StateProps = {
   title: string
@@ -26,9 +27,9 @@ function State({ title, description, action }: StateProps) {
 export function Forbidden() {
   return (
     <State
-      title="You don't have access to this page"
-      description="Your account doesn't have permission to view this page."
-      action={{ label: "Back to Home", href: "/" }}
+      title={statesContent.forbidden.title}
+      description={statesContent.forbidden.description}
+      action={{ label: statesContent.forbidden.actionLabel, href: "/" }}
     />
   )
 }
@@ -36,9 +37,9 @@ export function Forbidden() {
 export function NotFound() {
   return (
     <State
-      title="Page not found"
-      description="The page you're looking for doesn't exist."
-      action={{ label: "Back to Home", href: "/" }}
+      title={statesContent.notFound.title}
+      description={statesContent.notFound.description}
+      action={{ label: statesContent.notFound.actionLabel, href: "/" }}
     />
   )
 }
@@ -46,9 +47,9 @@ export function NotFound() {
 export function FeatureUnavailable() {
   return (
     <State
-      title="Feature unavailable"
-      description="This feature isn't available yet. Check back soon."
-      action={{ label: "Back to Home", href: "/" }}
+      title={statesContent.featureUnavailable.title}
+      description={statesContent.featureUnavailable.description}
+      action={{ label: statesContent.featureUnavailable.actionLabel, href: "/" }}
     />
   )
 }

@@ -7,13 +7,14 @@ import {
 } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { mostReportedIdentifiers } from "@/data/mock/intelligence"
+import { dashboardContent } from "@/content/dashboard"
 
 export default function MostReportedIdentifiersSlot() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Most reported identifiers</CardTitle>
-        <CardDescription>Flagged most often by the community</CardDescription>
+        <CardTitle>{dashboardContent.reported.title}</CardTitle>
+        <CardDescription>{dashboardContent.reported.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ul className="divide-y">

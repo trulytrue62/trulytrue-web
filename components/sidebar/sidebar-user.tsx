@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/sidebar"
 import { ChevronsUpDownIcon, LogOutIcon } from "lucide-react"
 
+import { sidebarUserContent } from "@/content/sidebar-user"
+
 function initials(name?: string | null) {
   if (!name) {
     return "U"
@@ -87,7 +89,7 @@ export function SidebarUser() {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
               <LogOutIcon />
-              Log out
+              {sidebarUserContent.logOutLabel}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

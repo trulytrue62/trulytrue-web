@@ -8,15 +8,14 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { regionalTrends } from "@/data/mock/intelligence"
+import { dashboardContent } from "@/content/dashboard"
 
 export default function RegionalTrendsSlot() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Regional trends</CardTitle>
-        <CardDescription>
-          What&apos;s spreading near you and across India
-        </CardDescription>
+        <CardTitle>{dashboardContent.regional.title}</CardTitle>
+        <CardDescription>{dashboardContent.regional.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ul className="grid gap-3 sm:grid-cols-2">

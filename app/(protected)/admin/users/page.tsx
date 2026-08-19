@@ -1,3 +1,5 @@
+import { adminContent } from "@/content/admin"
+
 export default function AdminUsersPage() {
-  return <div>User Management</div>
+  return <div>{adminContent.usersTitle}</div>
 }

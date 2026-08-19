@@ -1,6 +1,7 @@
 import { GalleryVerticalEnd } from "lucide-react"
 
 import { LoginForm } from "@/components/auth/login-form"
+import { siteContent } from "@/content/site"
 
 export default function LoginPage() {
   return (
@@ -10,7 +11,7 @@ export default function LoginPage() {
           <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          TrulyTrue
+          {siteContent.name}
         </a>
         <LoginForm />
       </div>
