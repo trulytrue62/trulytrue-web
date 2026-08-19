@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useSession } from "next-auth/react"
+import { FlagIcon, LayoutDashboardIcon, LogInIcon } from "lucide-react"
 
 import { Brand } from "@/components/brand"
 import { Button } from "@/components/ui/button"
@@ -19,9 +20,13 @@ export function LandingNavbar() {
           variant="ghost"
           render={<Link href={session ? "/dashboard" : "/login"} />}
         >
+          {session ? <LayoutDashboardIcon /> : <LogInIcon />}
           {session ? "Dashboard" : "Login"}
         </Button>
-        <Button render={<Link href="/report" />}>Report</Button>
+        <Button render={<Link href="/report" />}>
+          <FlagIcon />
+          Report
+        </Button>
       </nav>
     </header>
   )
