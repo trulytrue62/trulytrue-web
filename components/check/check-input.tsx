@@ -45,7 +45,7 @@ const SUGGESTIONS = [
 const PLACEHOLDER_REPLY =
   "🟡 SUSPICIOUS — real-time checking isn't wired up yet, this is a placeholder result. Once live, this will combine community reports and AI analysis and explain why."
 
-export function ScamChecker() {
+export function CheckInput() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
 

@@ -4,7 +4,7 @@ import Link from "next/link"
 import { ArrowRightIcon } from "lucide-react"
 
 import { LandingNavbar } from "@/components/landing/navbar"
-import { ScamChecker } from "@/components/landing/scam-checker"
+import { CheckInput } from "@/components/check/check-input"
 import { Button } from "@/components/ui/button"
 import { authOptions } from "@/lib/auth"
 
@@ -34,7 +34,7 @@ export default async function LandingPage() {
           </Button>
         </div>
         <div id="check" className="w-full max-w-2xl scroll-mt-20">
-          <ScamChecker />
+          <CheckInput />
         </div>
       </main>
     </div>

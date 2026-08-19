@@ -111,8 +111,8 @@ export function LoginForm({
               </Field>
               {error && <p className="text-sm text-destructive">{error}</p>}
               <Field>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Signing in..." : "Login"}
+                <Button type="submit" isSaving = {isSubmitting}>
+                 Login
                 </Button>
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <a href="#">Sign up</a>
