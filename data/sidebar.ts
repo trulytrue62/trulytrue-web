@@ -1,12 +1,28 @@
-import { Bot, Settings2, SquareTerminal, Users2 } from "lucide-react"
+import { Bot, DatabaseZap, Flag, Grid3X3, TableOfContents, Users2 } from "lucide-react"
 
 import type { SidebarItem } from "@/types/sidebar"
 
 export const navItems: SidebarItem[] = [
+    {
+    name: "---Platform",
+    roles: ["user","admin"],
+  },
   {
     name: "Dashboard",
-    icon: SquareTerminal,
+    icon: Grid3X3,
     route: "/dashboard",
+    roles: ["admin", "user"],
+  },
+  {
+    name: "Check",
+    icon: DatabaseZap,
+    route: "/check",
+    roles: ["admin", "user"],
+  },
+  {
+    name: "Report",
+    icon: Flag,
+    route: "/report",
     roles: ["admin", "user"],
   },
   {
@@ -14,9 +30,9 @@ export const navItems: SidebarItem[] = [
     roles: ["admin"],
   },
   {
-    name: "Users",
-    icon: Users2,
-    route: "/admin/users",
+    name: "Reports",
+    icon: TableOfContents,
+    route: "/admin/reports",
     isNew: true,
     roles: ["admin"],
   },
