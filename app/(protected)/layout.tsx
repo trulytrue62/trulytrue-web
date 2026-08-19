@@ -22,7 +22,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
                         <SidebarTrigger className="-ml-1" />
                         <Separator
                             orientation="vertical"
-                            className="mr-2 data-[orientation=vertical]:h-4 "
+                            className="mr-2"
                         />
                         <DynamicBreadcrumbs />
                     </div>
@@ -33,7 +33,7 @@ export default function Page({ children }: { children: React.ReactNode }) {
                         </Button>
                     </div>
                 </header>
-                <div className="h-full w-full p-4 bg-muted/20">
+                <div className="h-full w-full p-4 ">
                     <RouteGuard>{children}</RouteGuard>
                 </div>
             </SidebarInset>
