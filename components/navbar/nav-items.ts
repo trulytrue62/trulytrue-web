@@ -14,7 +14,7 @@ export const loggedOutNavItems: NavItem[] = [
 ]
 
 export const loggedInNavItems: NavItem[] = [
-  { route: "/dashboard", label: "Home"},
+  { route: "/dashboard", label: "Trends"},
   { route: "/check", label: "Check"},
     { route: "/report", label: "Report"},
   {

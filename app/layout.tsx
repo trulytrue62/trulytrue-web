@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Navbar } from "@/components/navbar/navbar"
 import { LightRays } from "@/components/ui/light-rays"
+import { currentUser } from "@/data/mock/user"
 
 const notoSans = Noto_Sans({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -19,12 +20,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-
-  const dummy_user = {
-    name: 'l1n3ar l1n3ar',
-    roles: ['admin']
-  }
-
   return (
     <html
       lang="en"
@@ -35,15 +30,13 @@ export default function RootLayout({
         <ThemeProvider>
           <TooltipProvider>
             <div className="flex h-screen flex-col">
-              <Navbar user={dummy_user} />
-              <main className="flex-1 overflow-y-auto p-8">
-                <div className="h-full rounded-4xl bg-card p-4">
+              <Navbar user={currentUser} />
+              <main className="flex-1 overflow-y-auto py-6">
+                <div className="mx-auto h-full max-w-7xl rounded-4xl bg-card p-4">
                   {children}
                 </div>
               </main>
             </div>
-
-
           </TooltipProvider>
         </ThemeProvider>
       </body>

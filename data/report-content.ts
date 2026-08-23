@@ -45,7 +45,7 @@ export const reportContent = {
       country: {
         label: "Country",
         placeholder: "e.g. India",
-        description: "Auto-filled from your browser — feel free to correct it.",
+        description: "Auto-filled from your browser, feel free to correct it.",
         error: "Enter a country",
       },
       region: {
