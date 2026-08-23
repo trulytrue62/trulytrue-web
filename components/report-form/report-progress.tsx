@@ -40,10 +40,10 @@ export function ReportProgress({ currentStep }: { currentStep: number }) {
                 </div>
               )}
             </div>
-            <div className={cn("text-left", !isLast && "pb-8")}>
+            <div className={cn("text-left", !isLast && "pb-12")}>
               <p
                 className={cn(
-                  "pt-1 text-sm font-medium text-muted-foreground",
+                  "pt-1 text-sm font-medium whitespace-nowrap text-muted-foreground",
                   isActive && "text-foreground"
                 )}
               >
