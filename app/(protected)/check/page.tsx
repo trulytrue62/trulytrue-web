@@ -1,9 +1,9 @@
-import React from 'react'
+import { CheckChat } from "@/components/check-chat/check-chat"
 
-const CheckPage = () => {
+export default function CheckPage() {
   return (
-    <div>CheckPage</div>
+    <div className="h-full">
+      <CheckChat />
+    </div>
   )
 }
-
-export default CheckPage

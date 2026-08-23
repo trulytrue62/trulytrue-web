@@ -26,11 +26,11 @@ export const reportFormSchema = z.object({
 
 export type ReportFormValues = z.infer<typeof reportFormSchema>
 
-export function getReportFormDefaultValues(): ReportFormValues {
+export function getReportFormDefaultValues(identifierValue = ""): ReportFormValues {
   const now = new Date()
 
   return {
-    identifierValue: "",
+    identifierValue,
     scamType: "",
     description: "",
     incidentDate: now,

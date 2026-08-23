@@ -15,7 +15,7 @@ function ReviewRow({ label, value }: { label: string; value: React.ReactNode }) 
     <div className="flex items-start justify-between gap-4 border-b border-border/60 py-3 last:border-b-0">
       <span className="text-sm text-muted-foreground">{label}</span>
       <span className="max-w-[60%] text-right text-sm font-medium text-foreground">
-        {value || "—"}
+        {value || "Not provided"}
       </span>
     </div>
   )

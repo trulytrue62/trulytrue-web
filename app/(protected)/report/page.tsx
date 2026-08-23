@@ -1,3 +1,5 @@
+import { Suspense } from "react"
+
 import { DotPattern } from "@/components/ui/dot-pattern"
 import { Separator } from "@/components/ui/separator"
 import { reportContent } from "@/data/report-content"
@@ -24,7 +26,9 @@ export default function ReportPage() {
         
         </div>
               
-        <ReportForm />
+        <Suspense fallback={null}>
+          <ReportForm />
+        </Suspense>
       </div>
     </div>
   )
