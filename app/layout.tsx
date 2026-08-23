@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Navbar } from "@/components/navbar/navbar"
+import { LightRays } from "@/components/ui/light-rays"
 
 const notoSans = Noto_Sans({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -33,8 +34,16 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <TooltipProvider>
-            <Navbar user={dummy_user} />
-            <main className="min-h-screen bg-muted/20">{children}</main>
+            <div className="flex h-screen flex-col">
+              <Navbar user={dummy_user} />
+              <main className="flex-1 overflow-y-auto bg-muted px-4 py-4">
+                <div className="h-full rounded-4xl bg-card p-4">
+                  {children}
+                </div>
+              </main>
+            </div>
+
+
           </TooltipProvider>
         </ThemeProvider>
       </body>

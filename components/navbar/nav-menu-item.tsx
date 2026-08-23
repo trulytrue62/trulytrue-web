@@ -44,7 +44,7 @@ export function NavMenuItem({ item }: { item: NavItem }) {
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground outline-none hover:text-foreground aria-expanded:text-foreground hover:bg-muted p-1 rounded-xl">
           <NavItemLabel item={item} />
-          <ChevronDownIcon className="size-3.5" />
+          {/* <ChevronDownIcon className="" /> */}
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           {item.children.map((child) => (
@@ -58,7 +58,7 @@ export function NavMenuItem({ item }: { item: NavItem }) {
   return (
     <Link
       href={item.route}
-      className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted p-1 rounded-xl"
+      className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted p-1 rounded-xl"
     >
       <NavItemLabel item={item} />
     </Link>

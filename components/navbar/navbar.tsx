@@ -23,14 +23,14 @@ export function Navbar({ user = null }: { user?: NavUser | null }) {
   const visibleItems = user ? filterNavItemsByRole(loggedInNavItems, user.roles) : []
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background">
-      <div className="flex items-center justify-between gap-6 px-6 py-3">
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-card">
+      <div className="flex items-center justify-between gap-6 px-4 py-2">
         <div className="flex items-center gap-8">
           <Link href="/">
             <Brand />
           </Link>
           {user && (
-            <nav className="hidden items-center gap-6 md:flex">
+            <nav className="hidden items-center gap-4 md:flex">
               {visibleItems.map((item) => (
                 <NavMenuItem key={item.route} item={item} />
               ))}

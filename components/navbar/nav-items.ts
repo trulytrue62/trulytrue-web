@@ -9,8 +9,8 @@ import {
 import type { NavItem } from "@/types/nav"
 
 export const loggedOutNavItems: NavItem[] = [
-  { route: "/login", label: "Login", icon: LogInIcon },
-  { route: "/report", label: "Report a scam", icon: FlagIcon },
+  { route: "/login", label: "Login" },
+  { route: "/report", label: "Report a scam" },
 ]
 
 export const loggedInNavItems: NavItem[] = [
