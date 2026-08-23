@@ -18,8 +18,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { scamTypes } from "@/data/scam-types"
-import type { ReportFormValues } from "@/components/report-form/report-schema"
+import { reportContent } from "@/data/report-content"
+import { scamTypes } from "@/data/mock/scam-types"
+import type { ReportFormValues } from "@/schemas/report-schema"
+
+const content = reportContent.steps.details
 
 export function StepScamDetails({ form }: { form: UseFormReturn<ReportFormValues> }) {
   const [datePopoverOpen, setDatePopoverOpen] = useState(false)
@@ -27,14 +30,14 @@ export function StepScamDetails({ form }: { form: UseFormReturn<ReportFormValues
   return (
     <FieldGroup>
       <Field>
-        <FieldLabel htmlFor="scamType">Type of scam</FieldLabel>
+        <FieldLabel htmlFor="scamType">{content.scamType.label}</FieldLabel>
         <Controller
           control={form.control}
           name="scamType"
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
               <SelectTrigger id="scamType" className="w-full">
-                <SelectValue placeholder="Select a category" />
+                <SelectValue placeholder={content.scamType.placeholder} />
               </SelectTrigger>
               <SelectContent>
                 {scamTypes.map((type) => (
@@ -50,10 +53,10 @@ export function StepScamDetails({ form }: { form: UseFormReturn<ReportFormValues
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="description">What happened?</FieldLabel>
+        <FieldLabel htmlFor="description">{content.description.label}</FieldLabel>
         <Textarea
           id="description"
-          placeholder="Describe what happened, in as much detail as you can share."
+          placeholder={content.description.placeholder}
           rows={5}
           {...form.register("description")}
         />
@@ -62,7 +65,7 @@ export function StepScamDetails({ form }: { form: UseFormReturn<ReportFormValues
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <Field>
-          <FieldLabel htmlFor="incidentDate">Date of the incident</FieldLabel>
+          <FieldLabel htmlFor="incidentDate">{content.incidentDate.label}</FieldLabel>
           <Controller
             control={form.control}
             name="incidentDate"
@@ -74,11 +77,11 @@ export function StepScamDetails({ form }: { form: UseFormReturn<ReportFormValues
                       id="incidentDate"
                       type="button"
                       variant="outline"
-                      className="w-full justify-between font-normal"
+                      className="w-full justify-between rounded-3xl border-transparent bg-input/50 font-normal hover:bg-input/50 hover:text-foreground"
                     />
                   }
                 >
-                  {field.value ? format(field.value, "PPP") : "Select date"}
+                  {field.value ? format(field.value, "PPP") : content.incidentDate.placeholder}
                   <ChevronDownIcon data-icon="inline-end" />
                 </PopoverTrigger>
                 <PopoverContent className="w-auto overflow-hidden p-0" align="start">
@@ -101,11 +104,11 @@ export function StepScamDetails({ form }: { form: UseFormReturn<ReportFormValues
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="incidentTime">Time of the incident</FieldLabel>
+          <FieldLabel htmlFor="incidentTime">{content.incidentTime.label}</FieldLabel>
           <Input
             id="incidentTime"
             type="time"
-            className="appearance-none bg-background [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+            className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
             {...form.register("incidentTime")}
           />
           <FieldError errors={[form.formState.errors.incidentTime]} />

@@ -2,14 +2,17 @@
 
 import type { UseFormReturn } from "react-hook-form"
 
-import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field"
+import { Field, FieldError, FieldLabel } from "@/components/ui/field"
 import { FileUpload } from "@/components/ui/file-upload"
-import type { ReportFormValues } from "@/components/report-form/report-schema"
+import { reportContent } from "@/data/report-content"
+import type { ReportFormValues } from "@/schemas/report-schema"
+
+const content = reportContent.steps.evidence
 
 export function StepEvidence({ form }: { form: UseFormReturn<ReportFormValues> }) {
   return (
     <Field>
-      <FieldLabel>Evidence (optional)</FieldLabel>
+      <FieldLabel>{content.fieldLabel}</FieldLabel>
       <div className="overflow-hidden rounded-2xl border border-dashed border-border">
         <FileUpload
           onChange={(files) =>

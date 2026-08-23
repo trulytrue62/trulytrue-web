@@ -3,9 +3,12 @@
 import { format } from "date-fns"
 import { useWatch, type UseFormReturn } from "react-hook-form"
 
-import { scamTypes } from "@/data/scam-types"
-import { detectIdentifierType, identifierTypeIcons, identifierTypeLabels } from "@/components/report-form/identifier"
-import type { ReportFormValues } from "@/components/report-form/report-schema"
+import { reportContent } from "@/data/report-content"
+import { scamTypes } from "@/data/mock/scam-types"
+import { detectIdentifierType, identifierTypeIcons, identifierTypeLabels } from "@/utils/identifier"
+import type { ReportFormValues } from "@/schemas/report-schema"
+
+const content = reportContent.steps.review.rows
 
 function ReviewRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
@@ -27,12 +30,12 @@ export function StepReview({ form }: { form: UseFormReturn<ReportFormValues> }) 
   return (
     <div className="flex flex-col gap-1">
       <ReviewRow
-        label="Reporting"
+        label={content.reporting}
         value={
           <span className="flex items-center justify-end gap-1.5">
             {values.identifierValue}
             {DetectedIcon && detected && (
-              <span className="flex items-center gap-1 rounded-full bg-indigo-600/10 px-2 py-0.5 text-xs font-medium text-indigo-600">
+              <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
                 <DetectedIcon className="size-3" />
                 {identifierTypeLabels[detected]}
               </span>
@@ -40,18 +43,21 @@ export function StepReview({ form }: { form: UseFormReturn<ReportFormValues> }) 
           </span>
         }
       />
-      <ReviewRow label="Scam type" value={scamTypeLabel} />
-      <ReviewRow label="Description" value={values.description} />
-      <ReviewRow label="Evidence" value={values.evidence?.name} />
+      <ReviewRow label={content.scamType} value={scamTypeLabel} />
+      <ReviewRow label={content.description} value={values.description} />
+      <ReviewRow label={content.evidence} value={values.evidence?.name} />
       <ReviewRow
-        label="Incident date & time"
+        label={content.incidentDateTime}
         value={
           values.incidentDate
             ? `${format(values.incidentDate, "PPP")}${values.incidentTime ? ` at ${values.incidentTime}` : ""}`
             : undefined
         }
       />
-      <ReviewRow label="Location" value={[values.region, values.country].filter(Boolean).join(", ")} />
+      <ReviewRow
+        label={content.location}
+        value={[values.region, values.country].filter(Boolean).join(", ")}
+      />
     </div>
   )
 }

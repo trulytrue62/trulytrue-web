@@ -1,4 +1,4 @@
-import { scamTypes } from "@/data/scam-types"
+import { scamTypes } from "@/data/mock/scam-types"
 
 export type SimilarReport = {
   scamType: string

@@ -14,21 +14,22 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { detectIdentifierType } from "@/components/report-form/identifier"
+import { reportContent } from "@/data/report-content"
+import { detectIdentifierType } from "@/utils/identifier"
 import { ReportProgress } from "@/components/report-form/report-progress"
 import { ReportSummary } from "@/components/report-form/report-summary"
 import {
+  getReportFormDefaultValues,
   REPORT_STEPS,
-  reportFormDefaultValues,
   reportFormSchema,
   type ReportFormValues,
-} from "@/components/report-form/report-schema"
+} from "@/schemas/report-schema"
 import { SimilarReportsSidebar } from "@/components/report-form/similar-reports-sidebar"
-import { StepEvidence } from "@/components/report-form/step-evidence"
-import { StepIdentifier } from "@/components/report-form/step-identifier"
-import { StepLocation } from "@/components/report-form/step-location"
-import { StepReview } from "@/components/report-form/step-review"
-import { StepScamDetails } from "@/components/report-form/step-scam-details"
+import { StepEvidence } from "@/components/report-form/steps/step-evidence"
+import { StepIdentifier } from "@/components/report-form/steps/step-identifier"
+import { StepLocation } from "@/components/report-form/steps/step-location"
+import { StepReview } from "@/components/report-form/steps/step-review"
+import { StepScamDetails } from "@/components/report-form/steps/step-scam-details"
 import type { ScamReport } from "@/types/report"
 
 const STEP_COMPONENTS = [
@@ -58,10 +59,8 @@ function SuccessView() {
       className="flex flex-col items-center gap-3 py-16 text-center"
     >
       <CheckCircle2Icon className="size-12 text-primary" />
-      <h2 className="text-lg font-medium">Report submitted</h2>
-      <p className="max-w-sm text-sm text-muted-foreground">
-        Thanks for helping keep others safe. We&apos;ll review this report shortly.
-      </p>
+      <h2 className="text-lg font-medium">{reportContent.success.title}</h2>
+      <p className="max-w-sm text-sm text-muted-foreground">{reportContent.success.description}</p>
     </motion.div>
   )
 }
@@ -74,7 +73,7 @@ export function ReportForm() {
 
   const form = useForm<ReportFormValues>({
     resolver: zodResolver(reportFormSchema),
-    defaultValues: reportFormDefaultValues,
+    defaultValues: getReportFormDefaultValues(),
     mode: "onChange",
   })
 
@@ -163,10 +162,10 @@ export function ReportForm() {
             onClick={goBack}
             disabled={currentStep === 0}
           >
-            Back
+            {reportContent.actions.back}
           </Button>
-          <Button type="button" onClick={goNext} className="bg-indigo-600 text-white hover:bg-indigo-600/90">
-            {isLastStep ? "Submit report" : "Next"}
+          <Button type="button" onClick={goNext}>
+            {isLastStep ? reportContent.actions.submit : reportContent.actions.next}
           </Button>
         </div>
       </div>
@@ -174,7 +173,7 @@ export function ReportForm() {
       <Sheet open={similarReportsOpen} onOpenChange={setSimilarReportsOpen} modal={false}>
         <SheetContent side="right" overlay={false}>
           <SheetHeader>
-            <SheetTitle>Similar reports</SheetTitle>
+            <SheetTitle>{reportContent.similarReportsDrawer.title}</SheetTitle>
           </SheetHeader>
           <div className="px-6 pb-6">
             <SimilarReportsSidebar form={form} />

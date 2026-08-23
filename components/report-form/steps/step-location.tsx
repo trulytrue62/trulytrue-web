@@ -5,7 +5,10 @@ import type { UseFormReturn } from "react-hook-form"
 
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import type { ReportFormValues } from "@/components/report-form/report-schema"
+import { reportContent } from "@/data/report-content"
+import type { ReportFormValues } from "@/schemas/report-schema"
+
+const content = reportContent.steps.location
 
 function detectCountry(): string | null {
   try {
@@ -34,15 +37,15 @@ export function StepLocation({ form }: { form: UseFormReturn<ReportFormValues> }
   return (
     <FieldGroup>
       <Field>
-        <FieldLabel htmlFor="country">Country</FieldLabel>
-        <Input id="country" placeholder="e.g. India" {...form.register("country")} />
-        <FieldDescription>Auto-filled from your browser &mdash; feel free to correct it.</FieldDescription>
+        <FieldLabel htmlFor="country">{content.country.label}</FieldLabel>
+        <Input id="country" placeholder={content.country.placeholder} {...form.register("country")} />
+        <FieldDescription>{content.country.description}</FieldDescription>
         <FieldError errors={[form.formState.errors.country]} />
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="region">State / region</FieldLabel>
-        <Input id="region" placeholder="e.g. Maharashtra" {...form.register("region")} />
+        <FieldLabel htmlFor="region">{content.region.label}</FieldLabel>
+        <Input id="region" placeholder={content.region.placeholder} {...form.register("region")} />
         <FieldError errors={[form.formState.errors.region]} />
       </Field>
     </FieldGroup>

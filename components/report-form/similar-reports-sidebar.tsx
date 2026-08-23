@@ -6,11 +6,13 @@ import { SearchIcon, ShieldCheckIcon } from "lucide-react"
 import { useWatch, type UseFormReturn } from "react-hook-form"
 
 import { Skeleton } from "@/components/ui/skeleton"
-import { detectIdentifierType } from "@/components/report-form/identifier"
-import { getMockSimilarReports, type SimilarReportsResult } from "@/components/report-form/similar-reports"
-import type { ReportFormValues } from "@/components/report-form/report-schema"
+import { reportContent } from "@/data/report-content"
+import { detectIdentifierType } from "@/utils/identifier"
+import { getMockSimilarReports, type SimilarReportsResult } from "@/data/mock/similar-reports"
+import type { ReportFormValues } from "@/schemas/report-schema"
 
 const SEARCH_DELAY_MS = 500
+const content = reportContent.similarReportsDrawer
 
 export function SimilarReportsSidebar({ form }: { form: UseFormReturn<ReportFormValues> }) {
   const identifierValue = useWatch({ control: form.control, name: "identifierValue" })
@@ -43,7 +45,7 @@ export function SimilarReportsSidebar({ form }: { form: UseFormReturn<ReportForm
             exit={{ opacity: 0 }}
             className="text-xs text-muted-foreground"
           >
-            We&apos;ll check for matching reports once you enter what you&apos;re reporting.
+            {content.idle}
           </motion.p>
         ) : searching ? (
           <motion.div
@@ -55,7 +57,7 @@ export function SimilarReportsSidebar({ form }: { form: UseFormReturn<ReportForm
           >
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <SearchIcon className="size-3.5 animate-pulse" />
-              Checking for matches&hellip;
+              {content.searching}
             </div>
             <Skeleton className="h-12 w-full rounded-2xl" />
             <Skeleton className="h-12 w-full rounded-2xl" />
@@ -69,8 +71,8 @@ export function SimilarReportsSidebar({ form }: { form: UseFormReturn<ReportForm
             className="flex flex-col gap-3"
           >
             <p className="text-xs text-muted-foreground">
-              <span className="font-medium text-indigo-600">{result.count}</span> other{" "}
-              {result.count === 1 ? "report" : "reports"} for this identifier
+              <span className="font-medium text-primary">{result.count}</span> {content.resultPrefix}{" "}
+              {content.resultSuffix(result.count)} {content.resultLocation}
             </p>
             <ul className="flex flex-col gap-2">
               {result.examples.map((example, index) => (
@@ -92,8 +94,8 @@ export function SimilarReportsSidebar({ form }: { form: UseFormReturn<ReportForm
             exit={{ opacity: 0 }}
             className="flex items-start gap-2 text-xs text-muted-foreground"
           >
-            <ShieldCheckIcon className="size-4 shrink-0 text-indigo-600" />
-            No prior reports found for this identifier yet.
+            <ShieldCheckIcon className="size-4 shrink-0 text-primary" />
+            {content.noneFound}
           </motion.div>
         ) : null}
       </AnimatePresence>
