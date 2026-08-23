@@ -1,0 +1,72 @@
+"use client"
+
+import Link from "next/link"
+
+import { Brand } from "@/components/brand"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { accountMenuItems } from "@/components/navbar/account-menu-items"
+import { filterNavItemsByRole, loggedInNavItems, loggedOutNavItems } from "@/components/navbar/nav-items"
+import { NavDropdownMenuItem, NavItemLabel, NavMenuItem } from "@/components/navbar/nav-menu-item"
+import { ThemeToggle } from "@/components/navbar/theme-toggle"
+import type { NavUser } from "@/types/nav"
+
+const loginItem = loggedOutNavItems.find((item) => item.route === "/login")!
+const reportItem = loggedOutNavItems.find((item) => item.route === "/report")!
+
+export function Navbar({ user = null }: { user?: NavUser | null }) {
+  const visibleItems = user ? filterNavItemsByRole(loggedInNavItems, user.roles) : []
+
+  return (
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-card">
+      <div className="flex items-center justify-between gap-6 px-4 py-2">
+        <div className="flex items-center gap-8">
+          <Link href="/">
+            <Brand />
+          </Link>
+          {user && (
+            <nav className="hidden items-center gap-4 md:flex">
+              {visibleItems.map((item) => (
+                <NavMenuItem key={item.route} item={item} />
+              ))}
+            </nav>
+          )}
+        </div>
+
+        {user ? (
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <DropdownMenu>
+              <DropdownMenuTrigger className="rounded-full p-1 outline-none transition-opacity hover:opacity-80 aria-expanded:opacity-80">
+                <Avatar size="sm">
+                  <AvatarImage src={user.image} alt={user.name} />
+                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {accountMenuItems.map((item) => (
+                  <NavDropdownMenuItem key={item.route} item={item} />
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button variant="ghost" render={<Link href={loginItem.route} />}>
+              <NavItemLabel item={loginItem} />
+            </Button>
+            <Button render={<Link href={reportItem.route} />}>
+              <NavItemLabel item={reportItem} />
+            </Button>
+          </div>
+        )}
+      </div>
+    </header>
+  )
+}
