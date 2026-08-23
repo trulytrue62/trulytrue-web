@@ -36,7 +36,7 @@ export default function RootLayout({
           <TooltipProvider>
             <div className="flex h-screen flex-col">
               <Navbar user={dummy_user} />
-              <main className="flex-1 overflow-y-auto bg-muted px-4 py-4">
+              <main className="flex-1 overflow-y-auto px-4 py-4">
                 <div className="h-full rounded-4xl bg-card p-4">
                   {children}
                 </div>

@@ -14,6 +14,7 @@ export function ThemeToggle() {
       size="icon"
       aria-label="Toggle theme"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className='rounded-full'
     >
       <SunIcon className="dark:hidden" />
       <MoonIcon className="hidden dark:block" />
