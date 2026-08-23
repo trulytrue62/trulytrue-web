@@ -1,5 +1,6 @@
 "use client"
 
+import { useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -29,12 +30,14 @@ function isItemActive(item: NavItem, pathname: string): boolean {
 
 export function Navbar({ user = null }: { user?: NavUser | null }) {
   const pathname = usePathname()
+  const pillRef = useRef<HTMLDivElement>(null)
   const visibleItems = user ? filterNavItemsByRole(loggedInNavItems, user.roles) : []
 
   return (
     <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-4 sm:pt-4">
       <BackgroundGradient containerClassName="mx-auto block w-full max-w-6xl rounded-full" className="block rounded-full">
         <div
+          ref={pillRef}
           className={cn(
             "flex w-full items-center justify-between gap-6 rounded-full",
             "border border-border bg-card px-3 py-2 shadow-lg backdrop-blur-xl"
@@ -45,7 +48,10 @@ export function Navbar({ user = null }: { user?: NavUser | null }) {
               <Brand />
             </Link>
             {user && (
-              <NavigationMenu className="hidden w-auto max-w-none flex-none justify-start md:flex">
+              <NavigationMenu
+                anchor={pillRef}
+                className="hidden w-auto max-w-none flex-none justify-start md:flex"
+              >
                 <NavigationMenuList className="flex-none justify-start gap-2">
                   {visibleItems.map((item) => (
                     <NavMenuItem key={item.route} item={item} active={isItemActive(item, pathname)} />

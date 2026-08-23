@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { motion } from "motion/react"
 
 import { cn } from "@/lib/utils"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
@@ -19,16 +20,47 @@ function NavItemBadge({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function NavItemLabel({ item }: { item: NavItem }) {
+export function NavItemLabel({
+  item,
+  iconClassName = "size-4",
+}: {
+  item: NavItem
+  iconClassName?: string
+}) {
   const Icon = item.icon
 
   return (
     <span className="flex items-center gap-1.5">
-      {Icon && <Icon className="size-4" />}
+      {Icon && <Icon className={iconClassName} />}
       {item.label}
       {item.isNew && <NavItemBadge>New</NavItemBadge>}
       {item.isBeta && <NavItemBadge>Beta</NavItemBadge>}
     </span>
+  )
+}
+
+function NavMegaMenuItem({ item, index }: { item: NavItem; index: number }) {
+  const Icon = item.icon
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.04, duration: 0.2, ease: "easeOut" }}
+    >
+      <NavigationMenuLink
+        render={<Link href={item.route} />}
+        className="h-full flex-col items-start justify-start gap-1.5 rounded-2xl border border-border/60 bg-muted/40 p-4 text-left hover:bg-muted focus:bg-muted focus-visible:ring-0"
+      >
+        <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+          {Icon && <Icon className="size-3.5" />}
+          {item.label}
+        </span>
+        {item.description && (
+          <span className="text-base leading-snug font-semibold text-foreground">{item.description}</span>
+        )}
+      </NavigationMenuLink>
+    </motion.div>
   )
 }
 
@@ -57,20 +89,12 @@ export function NavMenuItem({ item, active = false }: { item: NavItem; active?: 
           <NavItemLabel item={item} />
         </NavigationMenuTrigger>
         <NavigationMenuContent>
-          <div className="w-64 p-5">
-            <p className="mb-3 text-xs font-medium text-muted-foreground">{item.label}</p>
-            <ul className="flex flex-col gap-3.5">
-              {item.children.map((child) => (
-                <li key={child.route}>
-                  <NavigationMenuLink
-                    render={<Link href={child.route} />}
-                    className="h-auto justify-start rounded-none bg-transparent px-2 text-sm font-medium text-foreground hover:bg-transparent hover:text-muted-foreground focus:bg-transparent focus-visible:ring-0"
-                  >
-                    <NavItemLabel item={child} />
-                  </NavigationMenuLink>
-                </li>
+          <div className="w-full p-3">
+            <div className="grid grid-cols-3 gap-3">
+              {item.children.map((child, index) => (
+                <NavMegaMenuItem key={child.route} item={child} index={index} />
               ))}
-            </ul>
+            </div>
           </div>
         </NavigationMenuContent>
       </NavigationMenuItem>

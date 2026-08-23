@@ -130,7 +130,7 @@ export function ReportForm() {
 
   return (
     <div className="flex w-full flex-col gap-10 lg:flex-row">
-      <aside className="w-full shrink-0 border-border/60 lg:w-52 lg:border-r lg:pr-8">
+      <aside className="w-full shrink-0 border-border/60 lg:w-72 lg:border-r lg:pr-8">
         <ReportProgress currentStep={currentStep} />
       </aside>
 

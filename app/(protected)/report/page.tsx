@@ -15,7 +15,7 @@ export default function ReportPage() {
       <div className="relative flex w-full flex-col gap-10">
         <div className="flex items-center gap-3">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">{reportContent.page.title}</h1>
+            {/* <h1 className="text-2xl font-semibold tracking-tight">{reportContent.page.title}</h1> */}
             {/* <p className="text-sm text-muted-foreground">
               Help others stay safe by reporting a suspicious phone number, URL, email, UPI ID etc.
             </p> */}
