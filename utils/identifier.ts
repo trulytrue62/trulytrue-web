@@ -8,6 +8,11 @@ const URL_PATTERN =
   /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\/[^\s]*)?$/i
 const PHONE_PATTERN = /^\+?[\d\s-]{7,15}$/
 
+const EMAIL_OR_UPI_TOKEN_PATTERN = /[a-zA-Z0-9._-]{2,}@[a-zA-Z0-9.-]{2,}/
+const URL_TOKEN_PATTERN =
+  /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9-]+\.(?:com|org|net|in|co|io|gov|edu|info|biz|xyz)(?:\/[^\s]*)?)/i
+const PHONE_TOKEN_PATTERN = /\+?\d[\d\s-]{6,14}\d/
+
 export function detectIdentifierType(value: string): IdentifierType | null {
   const trimmed = value.trim()
 
@@ -28,6 +33,29 @@ export function detectIdentifierType(value: string): IdentifierType | null {
   }
 
   return "text"
+}
+
+export function extractIdentifierFromText(
+  text: string
+): { value: string; type: IdentifierType } | null {
+  const atMatch = text.match(EMAIL_OR_UPI_TOKEN_PATTERN)
+  if (atMatch) {
+    const token = atMatch[0]
+    const domain = token.split("@")[1] ?? ""
+    return { value: token, type: domain.includes(".") ? "email" : "upi" }
+  }
+
+  const urlMatch = text.match(URL_TOKEN_PATTERN)
+  if (urlMatch) {
+    return { value: urlMatch[0], type: "url" }
+  }
+
+  const phoneMatch = text.match(PHONE_TOKEN_PATTERN)
+  if (phoneMatch) {
+    return { value: phoneMatch[0].trim(), type: "phone" }
+  }
+
+  return null
 }
 
 export const identifierTypeLabels: Record<IdentifierType, string> = {

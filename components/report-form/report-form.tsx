@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react"
 import confetti from "canvas-confetti"
 import { AnimatePresence, motion } from "motion/react"
+import { useSearchParams } from "next/navigation"
 import { CheckCircle2Icon } from "lucide-react"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
@@ -66,17 +67,22 @@ function SuccessView() {
 }
 
 export function ReportForm() {
-  const [currentStep, setCurrentStep] = useState(0)
+  const searchParams = useSearchParams()
+  const prefilledIdentifier = searchParams.get("identifier") ?? ""
+  const hasValidPrefill = Boolean(prefilledIdentifier) && detectIdentifierType(prefilledIdentifier) !== null
+
+  const [currentStep, setCurrentStep] = useState(hasValidPrefill ? 1 : 0)
   const [direction, setDirection] = useState(1)
   const [submitted, setSubmitted] = useState(false)
   const [similarReportsOpen, setSimilarReportsOpen] = useState(false)
 
   const form = useForm<ReportFormValues>({
     resolver: zodResolver(reportFormSchema),
-    defaultValues: getReportFormDefaultValues(),
+    defaultValues: getReportFormDefaultValues(prefilledIdentifier),
     mode: "onChange",
   })
 
+  const identifierValue = useWatch({ control: form.control, name: "identifierValue" })
   const isLastStep = currentStep === REPORT_STEPS.length - 1
   const StepComponent = STEP_COMPONENTS[currentStep]
 
@@ -176,7 +182,7 @@ export function ReportForm() {
             <SheetTitle>{reportContent.similarReportsDrawer.title}</SheetTitle>
           </SheetHeader>
           <div className="px-6 pb-6">
-            <SimilarReportsSidebar form={form} />
+            <SimilarReportsSidebar identifierValue={identifierValue ?? ""} />
           </div>
         </SheetContent>
       </Sheet>

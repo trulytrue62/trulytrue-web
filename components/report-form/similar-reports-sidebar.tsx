@@ -3,19 +3,16 @@
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import { SearchIcon, ShieldCheckIcon } from "lucide-react"
-import { useWatch, type UseFormReturn } from "react-hook-form"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { reportContent } from "@/data/report-content"
 import { detectIdentifierType } from "@/utils/identifier"
 import { getMockSimilarReports, type SimilarReportsResult } from "@/data/mock/similar-reports"
-import type { ReportFormValues } from "@/schemas/report-schema"
 
 const SEARCH_DELAY_MS = 500
 const content = reportContent.similarReportsDrawer
 
-export function SimilarReportsSidebar({ form }: { form: UseFormReturn<ReportFormValues> }) {
-  const identifierValue = useWatch({ control: form.control, name: "identifierValue" })
+export function SimilarReportsSidebar({ identifierValue }: { identifierValue: string }) {
   const isSearchable = Boolean(identifierValue) && detectIdentifierType(identifierValue ?? "") !== null
   const [result, setResult] = useState<SimilarReportsResult | null>(null)
   const [resolvedFor, setResolvedFor] = useState<string | null>(null)

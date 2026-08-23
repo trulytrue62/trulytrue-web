@@ -35,12 +35,12 @@ export function Navbar({ user = null }: { user?: NavUser | null }) {
 
   return (
     <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-4 sm:pt-4">
-      <BackgroundGradient containerClassName="mx-auto block w-full max-w-6xl rounded-full" className="block rounded-full">
+      <BackgroundGradient containerClassName="mx-auto block w-full max-w-7xl rounded-full" className="block rounded-full">
         <div
           ref={pillRef}
           className={cn(
             "flex w-full items-center justify-between gap-6 rounded-full",
-            "border border-border bg-card px-3 py-2 shadow-lg backdrop-blur-xl"
+            "bg-card px-3 py-2 shadow-lg backdrop-blur-xl"
           )}
         >
           <div className="flex min-w-0 items-center gap-6">
