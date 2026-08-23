@@ -3,9 +3,9 @@ import { LightRays } from "@/components/ui/light-rays"
 
 export default function Home() {
   return (
-    <div className="h-full w-full">
-      <LightRays />
-   
+    <div className="h-full w-full bg-red-50">
+      {/* <LightRays /> */}
+
     </div>
   )
 }

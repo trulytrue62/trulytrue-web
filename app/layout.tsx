@@ -20,8 +20,8 @@ export default function RootLayout({
 }>) {
 
   const dummy_user = {
-    name : 'l1n3ar l1n3ar',
-    roles : ['admin']
+    name: 'l1n3ar l1n3ar',
+    roles: ['admin']
   }
 
   return (
@@ -34,7 +34,7 @@ export default function RootLayout({
         <ThemeProvider>
           <TooltipProvider>
             <Navbar user={dummy_user} />
-            {children}
+            <main className="min-h-screen bg-muted/20">{children}</main>
           </TooltipProvider>
         </ThemeProvider>
       </body>
