@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { CheckIcon, MessageCircleQuestionIcon, PaperclipIcon, XIcon } from "lucide-react"
+import { format } from "date-fns"
+import { CalendarIcon, CheckIcon, MapPinIcon, MessageCircleQuestionIcon, PaperclipIcon, XIcon } from "lucide-react"
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { DetailRow } from "@/components/ui/detail-row"
+import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { FileUpload } from "@/components/ui/file-upload"
 import { IconRevealButton } from "@/components/ui/icon-reveal-button"
 import { Separator } from "@/components/ui/separator"
@@ -20,6 +21,15 @@ import type { ScamReport } from "@/types/report"
 const content = adminContent.reports.dialog
 
 type DialogMode = "view" | "reject" | "request_info"
+
+function Section({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span className="text-xs font-medium text-muted-foreground">{label}</span>
+      {children}
+    </div>
+  )
+}
 
 export function ReportDetailDialog({
   report,
@@ -80,65 +90,62 @@ export function ReportDetailDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between gap-2 pr-6">
-            <span className="flex items-center gap-2">
-              <Icon className="size-4 text-muted-foreground" />
-              {activeReport.id}
-            </span>
+          <DialogTitle className="flex items-center gap-2 pr-6">
+            {activeReport.id}
             <ReportStatusBadge status={activeReport.status} />
           </DialogTitle>
+          <DialogDescription>Reported by {submitter?.name ?? "Unknown"}</DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col gap-4 text-sm">
-          <div className="flex flex-col">
-            <DetailRow label={adminContent.reports.columns.category} value={scamTypeLabel(activeReport.scamType)} />
-            <DetailRow label="Identifier" value={activeReport.identifierValue} />
-            <DetailRow label={adminContent.reports.columns.location} value={activeReport.region} />
-            <DetailRow
-              label={adminContent.reports.columns.submittedBy}
-              value={
-                submitter ? (
-                  <span className="flex flex-col">
-                    <span>{submitter.name}</span>
-                    <span className="text-xs font-normal text-muted-foreground">{submitter.email}</span>
-                  </span>
-                ) : (
-                  "Unknown"
-                )
-              }
-            />
-            <DetailRow label={adminContent.reports.columns.description} value={activeReport.description} />
-            <DetailRow
-              label="Evidence"
-              value={
-                activeReport.evidenceFileName ? (
-                  <span className="inline-flex items-center gap-1.5">
-                    <PaperclipIcon className="size-3.5" />
-                    {activeReport.evidenceFileName}
-                  </span>
-                ) : undefined
-              }
-            />
+        <div className="flex flex-col gap-7 text-sm">
+          <div className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-muted/50 p-4">
+            <div className="flex items-center gap-2 text-base font-medium text-foreground">
+              <Icon className="size-4 shrink-0 text-muted-foreground" />
+              <span className="break-all">{activeReport.identifierValue}</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
+              <Badge variant="soft">{scamTypeLabel(activeReport.scamType)}</Badge>
+              <span className="flex items-center gap-1.5">
+                <MapPinIcon className="size-4 shrink-0" />
+                {activeReport.region}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CalendarIcon className="size-4 shrink-0" />
+                {format(new Date(activeReport.createdAt), "MMM d, yyyy")}
+              </span>
+            </div>
           </div>
 
+          <Section label={adminContent.reports.columns.description}>
+            <p className="text-foreground">{activeReport.description}</p>
+          </Section>
+
+          <Section label="Evidence">
+            {activeReport.evidenceFileName ? (
+              <span className="flex w-fit items-center gap-1.5 rounded-full border border-border/60 bg-card px-3 py-1.5 text-xs text-muted-foreground">
+                <PaperclipIcon className="size-3.5" />
+                {activeReport.evidenceFileName}
+              </span>
+            ) : (
+              <p className="text-muted-foreground">No evidence attached</p>
+            )}
+          </Section>
+
           {activeReport.rejectionReason && (
-            <p className="text-xs text-muted-foreground">
-              <span className="font-medium text-foreground">{content.existingRejectionReason}: </span>
-              {activeReport.rejectionReason}
-            </p>
+            <Section label={content.existingRejectionReason}>
+              <p className="text-muted-foreground">{activeReport.rejectionReason}</p>
+            </Section>
           )}
           {activeReport.infoRequestMessage && (
-            <p className="text-xs text-muted-foreground">
-              <span className="font-medium text-foreground">{content.existingInfoRequest}: </span>
-              {activeReport.infoRequestMessage}
-            </p>
+            <Section label={content.existingInfoRequest}>
+              <p className="text-muted-foreground">{activeReport.infoRequestMessage}</p>
+            </Section>
           )}
 
           <Separator />
 
-          {mode === "view" ? (
-            <p className="text-xs font-medium text-muted-foreground">Decision</p>
-          ) : (
+          {mode !== "view" && (
             <div className="flex flex-col gap-2">
               <label className="text-xs font-medium text-foreground">
                 {mode === "reject" ? content.rejectReasonLabel : content.infoRequestLabel}

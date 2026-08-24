@@ -73,4 +73,9 @@ export const reportContent = {
     title: "Report submitted",
     description: "Thanks for helping keep others safe. We'll review this report shortly.",
   },
+  footer: {
+    reviewed: "Reviewed by our team",
+    private: "Your identity stays private",
+    location: "Location is aggregated, never exact",
+  },
 } as const

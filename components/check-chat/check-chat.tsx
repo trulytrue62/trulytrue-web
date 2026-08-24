@@ -89,11 +89,11 @@ export function CheckChat() {
 
   return (
     <div className="relative flex h-full min-h-0 flex-col">
-      <DotPattern
+      {/* <DotPattern
         width={28}
         height={28}
         className="text-primary/25 [mask-image:linear-gradient(to_top_left,black,transparent)]"
-      />
+      /> */}
 
       <div className="relative flex-1 overflow-y-auto">
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-8">
@@ -110,7 +110,7 @@ export function CheckChat() {
         <ChatComposer onSend={handleSend} disabled={isAnalyzing} />
         {messages.length === 1 && !isAnalyzing && (
           <div className="mx-auto flex w-full max-w-3xl flex-wrap justify-center gap-2">
-            {checkContent.examples.map((example) => (
+            {/* {checkContent.examples.map((example) => (
               <button
                 key={example}
                 type="button"
@@ -119,7 +119,7 @@ export function CheckChat() {
               >
                 {example}
               </button>
-            ))}
+            ))} */}
           </div>
         )}
       </div>

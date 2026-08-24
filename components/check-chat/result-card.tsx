@@ -6,10 +6,9 @@ import { AlertTriangleIcon, CheckCircle2Icon, ShieldAlertIcon } from "lucide-rea
 
 import { AnimatedCircularProgressBar } from "@/components/ui/animated-circular-progress-bar"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { checkContent } from "@/data/check-content"
 import { cn } from "@/lib/utils"
-import { SimilarReportsSidebar } from "@/components/report-form/similar-reports-sidebar"
+import { SimilarReportsDialog } from "@/components/report-form/similar-reports-dialog"
 import type { CheckResult } from "@/data/mock/check-analysis"
 
 const VERDICT_STYLES = {
@@ -85,16 +84,12 @@ export function ResultCard({ result }: { result: CheckResult }) {
         )}
       </div>
 
-      <Sheet open={similarOpen} onOpenChange={setSimilarOpen} modal={false}>
-        <SheetContent side="right" overlay={false}>
-          <SheetHeader>
-            <SheetTitle>{checkContent.similarReportsDrawerTitle}</SheetTitle>
-          </SheetHeader>
-          <div className="px-6 pb-6">
-            <SimilarReportsSidebar identifierValue={result.extractedIdentifier ?? ""} />
-          </div>
-        </SheetContent>
-      </Sheet>
+      <SimilarReportsDialog
+        identifierValue={result.extractedIdentifier ?? ""}
+        open={similarOpen}
+        onOpenChange={setSimilarOpen}
+        title={checkContent.similarReportsDrawerTitle}
+      />
     </div>
   )
 }

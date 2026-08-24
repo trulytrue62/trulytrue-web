@@ -76,7 +76,7 @@ export function AnnouncementFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{announcement ? content.editTitle : content.newTitle}</DialogTitle>
+          <DialogTitle className="truncate pr-6">{announcement ? announcement.title : content.newTitle}</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">

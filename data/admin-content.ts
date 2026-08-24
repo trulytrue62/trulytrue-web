@@ -67,7 +67,7 @@ export const adminContent = {
     title: "Announcements",
     searchPlaceholder: "Search announcements...",
     empty: "No announcements yet.",
-    newButton: "New announcement",
+    newButton: "New",
     columns: {
       title: "Title",
       description: "Description",

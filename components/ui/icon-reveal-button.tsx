@@ -22,10 +22,10 @@ export function IconRevealButton({
       variant={variant}
       disabled={disabled}
       onClick={onClick}
-      className="group/reveal w-9 justify-start overflow-hidden px-0 transition-[width] duration-200 ease-out hover:w-auto hover:px-4"
+      className="group/reveal gap-0 px-2.5"
     >
-      <Icon className="mx-2.5 shrink-0" />
-      <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200 ease-out group-hover/reveal:max-w-40 group-hover/reveal:-ml-1.5 group-hover/reveal:opacity-100">
+      <Icon className="shrink-0" />
+      <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity,margin-left] duration-200 ease-out group-hover/reveal:ml-1.5 group-hover/reveal:max-w-40 group-hover/reveal:opacity-100">
         {label}
       </span>
     </Button>
