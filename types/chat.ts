@@ -1,3 +1,4 @@
+import type { AuditFields } from "@/types/audit"
 import type { CheckResult } from "@/data/mock/check-analysis"
 
 export type ChatAttachment = {
@@ -6,7 +7,9 @@ export type ChatAttachment = {
   url?: string
 }
 
+type ChatMessageBase = AuditFields & { id: string }
+
 export type ChatMessage =
-  | { id: string; role: "user"; kind: "text"; text: string; attachment?: ChatAttachment }
-  | { id: string; role: "assistant"; kind: "text"; text: string }
-  | { id: string; role: "assistant"; kind: "result"; text: string; result: CheckResult }
+  | (ChatMessageBase & { role: "user"; kind: "text"; text: string; attachment?: ChatAttachment })
+  | (ChatMessageBase & { role: "assistant"; kind: "text"; text: string })
+  | (ChatMessageBase & { role: "assistant"; kind: "result"; text: string; result: CheckResult })

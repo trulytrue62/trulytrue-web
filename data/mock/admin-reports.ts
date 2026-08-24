@@ -1,8 +1,5 @@
+import { createAuditFields } from "@/types/audit"
 import type { ScamReport } from "@/types/report"
-
-function audited(createdBy: string, createdAt: string) {
-  return { createdAt, createdBy, updatedAt: createdAt, updatedBy: createdBy, isDeleted: false }
-}
 
 export const mockAdminReports: ScamReport[] = [
   {
@@ -15,7 +12,7 @@ export const mockAdminReports: ScamReport[] = [
     region: "Patna, Bihar",
     incidentDateTime: "2026-08-09T18:00:00.000Z",
     evidenceFileName: "otp-screenshot.png",
-    ...audited("user-1", "2026-08-10T10:15:00.000Z"),
+    ...createAuditFields("user-1", "2026-08-10T10:15:00.000Z"),
   },
   {
     id: "report-2",
@@ -26,7 +23,7 @@ export const mockAdminReports: ScamReport[] = [
     status: "verified",
     region: "Lucknow, Uttar Pradesh",
     incidentDateTime: "2026-08-06T13:00:00.000Z",
-    ...audited("user-2", "2026-08-06T14:40:00.000Z"),
+    ...createAuditFields("user-2", "2026-08-06T14:40:00.000Z"),
   },
   {
     id: "report-3",
@@ -38,7 +35,7 @@ export const mockAdminReports: ScamReport[] = [
     region: "Pune, Maharashtra",
     incidentDateTime: "2026-08-13T09:30:00.000Z",
     evidenceFileName: "loan-site-screenshot.png",
-    ...audited("user-3", "2026-08-14T08:05:00.000Z"),
+    ...createAuditFields("user-3", "2026-08-14T08:05:00.000Z"),
   },
   {
     id: "report-4",
@@ -50,7 +47,7 @@ export const mockAdminReports: ScamReport[] = [
     rejectionReason: "Domain doesn't match any known lookalike pattern and evidence was inconclusive.",
     region: "Bengaluru, Karnataka",
     incidentDateTime: "2026-07-28T16:00:00.000Z",
-    ...audited("user-1", "2026-07-29T11:30:00.000Z"),
+    ...createAuditFields("user-1", "2026-07-29T11:30:00.000Z"),
   },
   {
     id: "report-5",
@@ -62,7 +59,7 @@ export const mockAdminReports: ScamReport[] = [
     infoRequestMessage: "Could you share a screenshot of the original message or job posting?",
     region: "Ahmedabad, Gujarat",
     incidentDateTime: "2026-08-15T11:00:00.000Z",
-    ...audited("user-4", "2026-08-16T09:50:00.000Z"),
+    ...createAuditFields("user-4", "2026-08-16T09:50:00.000Z"),
   },
   {
     id: "report-6",
@@ -74,7 +71,7 @@ export const mockAdminReports: ScamReport[] = [
     region: "Hyderabad, Telangana",
     incidentDateTime: "2026-08-17T20:00:00.000Z",
     evidenceFileName: "chat-export.pdf",
-    ...audited("user-5", "2026-08-18T16:20:00.000Z"),
+    ...createAuditFields("user-5", "2026-08-18T16:20:00.000Z"),
   },
   {
     id: "report-7",
@@ -85,7 +82,7 @@ export const mockAdminReports: ScamReport[] = [
     status: "verified",
     region: "Chennai, Tamil Nadu",
     incidentDateTime: "2026-07-15T12:00:00.000Z",
-    ...audited("user-2", "2026-07-21T13:10:00.000Z"),
+    ...createAuditFields("user-2", "2026-07-21T13:10:00.000Z"),
   },
   {
     id: "report-8",
@@ -96,7 +93,7 @@ export const mockAdminReports: ScamReport[] = [
     status: "pending",
     region: "Kolkata, West Bengal",
     incidentDateTime: "2026-08-19T15:00:00.000Z",
-    ...audited("user-6", "2026-08-19T18:45:00.000Z"),
+    ...createAuditFields("user-6", "2026-08-19T18:45:00.000Z"),
   },
   {
     id: "report-9",
@@ -108,7 +105,7 @@ export const mockAdminReports: ScamReport[] = [
     rejectionReason: "Duplicate of report-2, same underlying identifier once normalized.",
     region: "Lucknow, Uttar Pradesh",
     incidentDateTime: "2026-08-07T22:00:00.000Z",
-    ...audited("user-7", "2026-08-08T07:55:00.000Z"),
+    ...createAuditFields("user-7", "2026-08-08T07:55:00.000Z"),
   },
   {
     id: "report-10",
@@ -120,7 +117,7 @@ export const mockAdminReports: ScamReport[] = [
     region: "Noida, Uttar Pradesh",
     incidentDateTime: "2026-08-20T07:00:00.000Z",
     evidenceFileName: "interview-chat.png",
-    ...audited("user-8", "2026-08-20T12:00:00.000Z"),
+    ...createAuditFields("user-8", "2026-08-20T12:00:00.000Z"),
   },
 ]
 

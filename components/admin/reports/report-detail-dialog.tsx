@@ -3,22 +3,17 @@
 import { useState } from "react"
 import { CheckIcon, MessageCircleQuestionIcon, PaperclipIcon, XIcon } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { DetailRow } from "@/components/ui/detail-row"
 import { FileUpload } from "@/components/ui/file-upload"
+import { IconRevealButton } from "@/components/ui/icon-reveal-button"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { ReportStatusBadge } from "@/components/admin/status-badge"
+import { scamTypeLabel } from "@/components/admin/reports/columns"
 import type { ReportDecision } from "@/components/admin/reports/decision"
 import { adminContent } from "@/data/admin-content"
 import { getMockUserById } from "@/data/mock/admin-users"
-import { scamTypes } from "@/data/mock/scam-types"
 import { identifierTypeIcons } from "@/utils/identifier"
 import type { ScamReport } from "@/types/report"
 
@@ -58,8 +53,6 @@ export function ReportDetailDialog({
   const activeReport = report
   const Icon = identifierTypeIcons[activeReport.identifierType]
   const submitter = getMockUserById(activeReport.createdBy)
-  const scamTypeLabel =
-    scamTypes.find((type) => type.value === activeReport.scamType)?.label ?? activeReport.scamType
 
   function handleApprove() {
     onDecision(activeReport.id, { type: "approve" })
@@ -87,44 +80,46 @@ export function ReportDetailDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Icon className="size-4 text-muted-foreground" />
-            {activeReport.identifierValue}
+          <DialogTitle className="flex items-center justify-between gap-2 pr-6">
+            <span className="flex items-center gap-2">
+              <Icon className="size-4 text-muted-foreground" />
+              {activeReport.id}
+            </span>
+            <ReportStatusBadge status={activeReport.status} />
           </DialogTitle>
-          <DialogDescription>
-            {scamTypeLabel} &middot; {activeReport.region}
-          </DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-4 text-sm">
-          <div className="grid grid-cols-2 gap-3 rounded-2xl bg-muted p-3">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-xs text-muted-foreground">{adminContent.reports.columns.submittedBy}</span>
-              <span className="font-medium text-foreground">{submitter?.name ?? "Unknown"}</span>
-              <span className="text-xs text-muted-foreground">{submitter?.email}</span>
-            </div>
-            <div className="flex flex-col gap-0.5">
-              <span className="text-xs text-muted-foreground">{adminContent.reports.columns.status}</span>
-              <ReportStatusBadge status={activeReport.status} />
-            </div>
+          <div className="flex flex-col">
+            <DetailRow label={adminContent.reports.columns.category} value={scamTypeLabel(activeReport.scamType)} />
+            <DetailRow label="Identifier" value={activeReport.identifierValue} />
+            <DetailRow label={adminContent.reports.columns.location} value={activeReport.region} />
+            <DetailRow
+              label={adminContent.reports.columns.submittedBy}
+              value={
+                submitter ? (
+                  <span className="flex flex-col">
+                    <span>{submitter.name}</span>
+                    <span className="text-xs font-normal text-muted-foreground">{submitter.email}</span>
+                  </span>
+                ) : (
+                  "Unknown"
+                )
+              }
+            />
+            <DetailRow label={adminContent.reports.columns.description} value={activeReport.description} />
+            <DetailRow
+              label="Evidence"
+              value={
+                activeReport.evidenceFileName ? (
+                  <span className="inline-flex items-center gap-1.5">
+                    <PaperclipIcon className="size-3.5" />
+                    {activeReport.evidenceFileName}
+                  </span>
+                ) : undefined
+              }
+            />
           </div>
-
-          <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-medium text-foreground">Description</span>
-            <p className="rounded-2xl border border-border/60 bg-card p-3 text-foreground">
-              {activeReport.description}
-            </p>
-          </div>
-
-          {activeReport.evidenceFileName && (
-            <div className="flex flex-col gap-1.5">
-              <span className="text-xs font-medium text-foreground">Evidence</span>
-              <span className="flex w-fit items-center gap-1.5 rounded-full border border-border/60 bg-card px-3 py-1.5 text-xs text-muted-foreground">
-                <PaperclipIcon className="size-3.5" />
-                {activeReport.evidenceFileName}
-              </span>
-            </div>
-          )}
 
           {activeReport.rejectionReason && (
             <p className="text-xs text-muted-foreground">
@@ -167,29 +162,26 @@ export function ReportDetailDialog({
         <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-between">
           {mode === "view" ? (
             <>
-              <Button type="button" variant="destructive" onClick={() => setMode("reject")}>
-                <XIcon />
-                {content.reject}
-              </Button>
+              <IconRevealButton icon={XIcon} label={content.reject} variant="destructive" onClick={() => setMode("reject")} />
               <div className="flex flex-col-reverse gap-2 sm:flex-row">
-                <Button type="button" variant="outline" onClick={() => setMode("request_info")}>
-                  <MessageCircleQuestionIcon />
-                  {content.requestInfo}
-                </Button>
-                <Button type="button" onClick={handleApprove}>
-                  <CheckIcon />
-                  {content.approve}
-                </Button>
+                <IconRevealButton
+                  icon={MessageCircleQuestionIcon}
+                  label={content.requestInfo}
+                  variant="outline"
+                  onClick={() => setMode("request_info")}
+                />
+                <IconRevealButton icon={CheckIcon} label={content.approve} onClick={handleApprove} />
               </div>
             </>
           ) : (
             <>
-              <Button type="button" variant="ghost" onClick={() => setMode("view")}>
-                {content.cancel}
-              </Button>
-              <Button type="button" disabled={!note.trim()} onClick={handleSubmitNote}>
-                {content.submit}
-              </Button>
+              <IconRevealButton icon={XIcon} label={content.cancel} variant="ghost" onClick={() => setMode("view")} />
+              <IconRevealButton
+                icon={CheckIcon}
+                label={content.submit}
+                disabled={!note.trim()}
+                onClick={handleSubmitNote}
+              />
             </>
           )}
         </div>

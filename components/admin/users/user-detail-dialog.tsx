@@ -7,7 +7,7 @@ import { ReportStatusBadge } from "@/components/admin/status-badge"
 import { adminContent } from "@/data/admin-content"
 import { scamTypeLabel } from "@/components/admin/reports/columns"
 import { identifierTypeIcons } from "@/utils/identifier"
-import type { AdminUser } from "@/types/admin"
+import type { User } from "@/types/user"
 import type { ScamReport } from "@/types/report"
 
 const content = adminContent.users.dialog
@@ -19,7 +19,7 @@ export function UserDetailDialog({
   onOpenChange,
   onSelectReport,
 }: {
-  user: AdminUser | null
+  user: User | null
   reports: ScamReport[]
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -50,10 +50,7 @@ export function UserDetailDialog({
                   <li key={report.id}>
                     <button
                       type="button"
-                      onClick={() => {
-                        onOpenChange(false)
-                        onSelectReport(report.id)
-                      }}
+                      onClick={() => onSelectReport(report.id)}
                       className="flex w-full items-center justify-between gap-3 rounded-2xl border border-border/60 bg-card px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
                     >
                       <div className="flex min-w-0 items-center gap-2">

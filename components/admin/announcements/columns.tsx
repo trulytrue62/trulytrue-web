@@ -6,20 +6,20 @@ import { AlertTriangleIcon, LightbulbIcon, Maximize2Icon, MegaphoneIcon, type Lu
 
 import { AnnouncementActionsCell } from "@/components/admin/announcements/actions"
 import type { AnnouncementsTableFeatures } from "@/components/admin/announcements/features"
-import { Badge, type badgeVariants } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 import { adminContent } from "@/data/admin-content"
 import type { Announcement, AnnouncementType } from "@/types/admin"
-import type { VariantProps } from "class-variance-authority"
 
 const content = adminContent.announcements.columns
 const typeContent = adminContent.announcements.type
 const statusContent = adminContent.announcements.status
 const columnHelper = createColumnHelper<AnnouncementsTableFeatures, Announcement>()
 
-const TYPE_CONFIG: Record<AnnouncementType, { icon: LucideIcon; variant: VariantProps<typeof badgeVariants>["variant"] }> = {
-  alert: { icon: AlertTriangleIcon, variant: "outline" },
-  update: { icon: MegaphoneIcon, variant: "soft" },
-  tip: { icon: LightbulbIcon, variant: "secondary" },
+const TYPE_CONFIG: Record<AnnouncementType, { icon: LucideIcon; className: string }> = {
+  alert: { icon: AlertTriangleIcon, className: "bg-rose-500/10 text-rose-600 dark:text-rose-400" },
+  update: { icon: MegaphoneIcon, className: "bg-sky-500/10 text-sky-600 dark:text-sky-400" },
+  tip: { icon: LightbulbIcon, className: "bg-violet-500/10 text-violet-600 dark:text-violet-400" },
 }
 
 const TYPE_FILTER_OPTIONS: { value: AnnouncementType; label: string }[] = [
@@ -56,13 +56,13 @@ export function createAnnouncementColumns(
     }),
     columnHelper.accessor("type", {
       header: content.type,
+      enableSorting: false,
       filterFn: "equalsString",
-      sortFn: "alphanumeric",
       meta: { filterOptions: TYPE_FILTER_OPTIONS },
       cell: (info) => {
-        const { icon: Icon, variant } = TYPE_CONFIG[info.getValue()]
+        const { icon: Icon, className } = TYPE_CONFIG[info.getValue()]
         return (
-          <Badge variant={variant} className="gap-1">
+          <Badge variant="soft" className={cn("gap-1", className)}>
             <Icon className="size-3" />
             {typeContent[info.getValue()]}
           </Badge>
@@ -72,8 +72,8 @@ export function createAnnouncementColumns(
     columnHelper.accessor((row) => (row.published ? "published" : "draft"), {
       id: "publishedStatus",
       header: content.status,
+      enableSorting: false,
       filterFn: "equalsString",
-      sortFn: "alphanumeric",
       meta: { filterOptions: STATUS_FILTER_OPTIONS },
       cell: (info) => (
         <Badge

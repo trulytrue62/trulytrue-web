@@ -5,15 +5,24 @@ import { useEffect, useRef, useState } from "react"
 import { DotPattern } from "@/components/ui/dot-pattern"
 import { checkContent } from "@/data/check-content"
 import { analyzeMessage } from "@/data/mock/check-analysis"
+import { currentUser } from "@/data/mock/user"
 import { AssistantAvatar } from "@/components/check-chat/assistant-avatar"
 import { ChatComposer } from "@/components/check-chat/chat-composer"
 import { ChatMessageItem } from "@/components/check-chat/chat-message"
+import { createAuditFields } from "@/types/audit"
 import type { ChatAttachment, ChatMessage } from "@/types/chat"
 
 const ANALYZE_DELAY_MS = 700
+const ASSISTANT_ACTOR_ID = "assistant"
 
 const INITIAL_MESSAGES: ChatMessage[] = [
-  { id: "greeting", role: "assistant", kind: "text", text: checkContent.greeting },
+  {
+    id: "greeting",
+    role: "assistant",
+    kind: "text",
+    text: checkContent.greeting,
+    ...createAuditFields(ASSISTANT_ACTOR_ID),
+  },
 ]
 
 function TypingIndicator() {
@@ -50,7 +59,14 @@ export function CheckChat() {
 
     setMessages((prev) => [
       ...prev,
-      { id: crypto.randomUUID(), role: "user", kind: "text", text: trimmed, attachment },
+      {
+        id: crypto.randomUUID(),
+        role: "user",
+        kind: "text",
+        text: trimmed,
+        attachment,
+        ...createAuditFields(currentUser.id),
+      },
     ])
     setIsAnalyzing(true)
 
@@ -58,7 +74,14 @@ export function CheckChat() {
       const result = analyzeMessage(trimmed)
       setMessages((prev) => [
         ...prev,
-        { id: crypto.randomUUID(), role: "assistant", kind: "result", text: trimmed, result },
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          kind: "result",
+          text: trimmed,
+          result,
+          ...createAuditFields(ASSISTANT_ACTOR_ID),
+        },
       ])
       setIsAnalyzing(false)
     }, ANALYZE_DELAY_MS)

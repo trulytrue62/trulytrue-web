@@ -12,6 +12,7 @@ import { DataTable } from "@/components/ui/data-table"
 import { adminContent } from "@/data/admin-content"
 import { currentUser } from "@/data/mock/user"
 import { mockAnnouncements } from "@/data/mock/admin-announcements"
+import { createAuditFields, touchAuditFields } from "@/types/audit"
 import type { Announcement } from "@/types/admin"
 
 const content = adminContent.announcements
@@ -43,34 +44,24 @@ export function AnnouncementsTable({ showNewButton = true }: { showNewButton?: b
   }
 
   function handleTogglePublished(announcement: Announcement) {
-    const now = new Date().toISOString()
     setAnnouncements((prev) =>
       prev.map((item) =>
         item.id === announcement.id
-          ? { ...item, published: !item.published, updatedAt: now, updatedBy: currentUser.id }
+          ? touchAuditFields({ ...item, published: !item.published }, currentUser.id)
           : item
       )
     )
   }
 
   function handleSave(values: AnnouncementFormValues, id?: string) {
-    const now = new Date().toISOString()
     if (id) {
       setAnnouncements((prev) =>
-        prev.map((item) => (item.id === id ? { ...item, ...values, updatedAt: now, updatedBy: currentUser.id } : item))
+        prev.map((item) => (item.id === id ? touchAuditFields({ ...item, ...values }, currentUser.id) : item))
       )
       return
     }
     setAnnouncements((prev) => [
-      {
-        id: crypto.randomUUID(),
-        createdAt: now,
-        createdBy: currentUser.id,
-        updatedAt: now,
-        updatedBy: currentUser.id,
-        isDeleted: false,
-        ...values,
-      },
+      { id: crypto.randomUUID(), ...values, ...createAuditFields(currentUser.id) },
       ...prev,
     ])
   }
@@ -101,6 +92,7 @@ export function AnnouncementsTable({ showNewButton = true }: { showNewButton?: b
           data={filteredAnnouncements}
           altRows
           emptyMessage={content.empty}
+          onRowClick={handleEdit}
         />
       </div>
 

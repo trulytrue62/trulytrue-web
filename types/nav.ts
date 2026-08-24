@@ -10,10 +10,3 @@ export type NavItem = {
   roles?: string[]
   children?: NavItem[]
 }
-
-export type NavUser = {
-  id: string
-  name: string
-  image?: string
-  roles?: string[]
-}

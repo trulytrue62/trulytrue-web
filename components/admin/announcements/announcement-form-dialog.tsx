@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { PaperclipIcon, SendIcon, SaveIcon } from "lucide-react"
+import { PaperclipIcon, SendIcon, SaveIcon, XIcon } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { FileUpload } from "@/components/ui/file-upload"
+import { IconRevealButton } from "@/components/ui/icon-reveal-button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
@@ -133,18 +133,16 @@ export function AnnouncementFormDialog({
         </div>
 
         <div className="flex w-full flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
-            {content.cancel}
-          </Button>
+          <IconRevealButton icon={XIcon} label={content.cancel} variant="ghost" onClick={() => onOpenChange(false)} />
           <div className="flex flex-col-reverse gap-2 sm:flex-row">
-            <Button type="button" variant="outline" disabled={!isValid} onClick={() => handleSave(false)}>
-              <SaveIcon />
-              {content.saveDraft}
-            </Button>
-            <Button type="button" disabled={!isValid} onClick={() => handleSave(true)}>
-              <SendIcon />
-              {content.publish}
-            </Button>
+            <IconRevealButton
+              icon={SaveIcon}
+              label={content.saveDraft}
+              variant="outline"
+              disabled={!isValid}
+              onClick={() => handleSave(false)}
+            />
+            <IconRevealButton icon={SendIcon} label={content.publish} disabled={!isValid} onClick={() => handleSave(true)} />
           </div>
         </div>
       </DialogContent>

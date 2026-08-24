@@ -32,6 +32,7 @@ import { StepEvidence } from "@/components/report-form/steps/step-evidence"
 import { StepIdentifier } from "@/components/report-form/steps/step-identifier"
 import { StepReview } from "@/components/report-form/steps/step-review"
 import { StepScamDetails } from "@/components/report-form/steps/step-scam-details"
+import { createAuditFields } from "@/types/audit"
 import type { ScamReport } from "@/types/report"
 
 const STEP_COMPONENTS = [
@@ -123,7 +124,6 @@ export function ReportForm() {
     const incidentDateTime = new Date(values.incidentDate)
     incidentDateTime.setHours(hours, minutes)
 
-    const now = new Date().toISOString()
     const report: ScamReport = {
       id: crypto.randomUUID(),
       identifierType: detectIdentifierType(values.identifierValue) ?? "phone",
@@ -134,11 +134,7 @@ export function ReportForm() {
       incidentDateTime: incidentDateTime.toISOString(),
       region: values.region,
       status: "pending",
-      createdAt: now,
-      createdBy: currentUser.id,
-      updatedAt: now,
-      updatedBy: currentUser.id,
-      isDeleted: false,
+      ...createAuditFields(currentUser.id),
     }
 
     console.log("Scam report submitted", report)

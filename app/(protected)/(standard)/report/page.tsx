@@ -5,7 +5,7 @@ import { ReportForm } from "@/components/report-form/report-form"
 
 export default function ReportPage() {
   return (
-    <div className="relative h-full sm:px-10">
+    <div className="relative h-full px-4 pt-8 sm:px-10">
       <DotPattern
         width={28}
         height={28}

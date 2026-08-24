@@ -17,7 +17,8 @@ import { accountMenuItems } from "@/components/navbar/account-menu-items"
 import { filterNavItemsByRole, loggedInNavItems, loggedOutNavItems } from "@/components/navbar/nav-items"
 import { NavDropdownMenuItem, NavItemLabel, NavMenuItem } from "@/components/navbar/nav-menu-item"
 import { ThemeToggle } from "@/components/navbar/theme-toggle"
-import type { NavItem, NavUser } from "@/types/nav"
+import type { NavItem } from "@/types/nav"
+import type { User } from "@/types/user"
 
 const loginItem = loggedOutNavItems.find((item) => item.route === "/login")!
 const reportItem = loggedOutNavItems.find((item) => item.route === "/report")!
@@ -26,10 +27,10 @@ function isItemActive(item: NavItem, pathname: string): boolean {
   return item.route === pathname || (item.children?.some((child) => child.route === pathname) ?? false)
 }
 
-export function Navbar({ user = null }: { user?: NavUser | null }) {
+export function Navbar({ user = null }: { user?: User | null }) {
   const pathname = usePathname()
   const pillRef = useRef<HTMLDivElement>(null)
-  const visibleItems = user ? filterNavItemsByRole(loggedInNavItems, user.roles) : []
+  const visibleItems = user ? filterNavItemsByRole(loggedInNavItems, user.role) : []
 
   return (
     <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-4 sm:pt-4">

@@ -3,7 +3,7 @@ import { CircleDashedIcon, CircleHelpIcon, CircleXIcon, CircleCheckIcon, BanIcon
 import { Badge } from "@/components/ui/badge"
 import { adminContent } from "@/data/admin-content"
 import { cn } from "@/lib/utils"
-import type { UserStatus } from "@/types/admin"
+import type { UserStatus } from "@/types/user"
 import type { ReportStatus } from "@/types/report"
 
 const STATUS_CONFIG: Record<ReportStatus, { className: string; icon: LucideIcon }> = {

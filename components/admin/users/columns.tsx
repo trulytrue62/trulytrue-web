@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { StackedCell } from "@/components/ui/stacked-cell"
 import { adminContent } from "@/data/admin-content"
 import { getMockReportCountBySubmitter } from "@/data/mock/admin-reports"
-import type { AdminUser, UserRole, UserStatus } from "@/types/admin"
+import type { User, UserRole, UserStatus } from "@/types/user"
 
 const content = adminContent.users.columns
 
@@ -30,12 +30,9 @@ const STATUS_FILTER_OPTIONS: { value: UserStatus; label: string }[] = [
   { value: "banned", label: "Banned" },
 ]
 
-const columnHelper = createColumnHelper<UsersTableFeatures, AdminUser>()
+const columnHelper = createColumnHelper<UsersTableFeatures, User>()
 
-export function createUserColumns(
-  onToggleBanned: (user: AdminUser) => void,
-  onChangeRole: (user: AdminUser, role: UserRole) => void
-) {
+export function createUserColumns(onToggleBanned: (user: User) => void) {
   return columnHelper.columns([
     columnHelper.accessor("name", {
       header: content.name,
@@ -44,15 +41,15 @@ export function createUserColumns(
     }),
     columnHelper.accessor("role", {
       header: content.role,
+      enableSorting: false,
       filterFn: "equalsString",
-      sortFn: "alphanumeric",
       meta: { filterOptions: ROLE_FILTER_OPTIONS },
       cell: (info) => <Badge variant="soft">{ROLE_LABELS[info.getValue()]}</Badge>,
     }),
     columnHelper.accessor("status", {
       header: content.status,
+      enableSorting: false,
       filterFn: "equalsString",
-      sortFn: "alphanumeric",
       meta: { filterOptions: STATUS_FILTER_OPTIONS },
       cell: (info) => <UserStatusBadge status={info.getValue()} />,
     }),
@@ -67,9 +64,7 @@ export function createUserColumns(
     }),
     columnHelper.display({
       id: "actions",
-      cell: (info) => (
-        <UserActionsCell user={info.row.original} onToggleBanned={onToggleBanned} onChangeRole={onChangeRole} />
-      ),
+      cell: (info) => <UserActionsCell user={info.row.original} onToggleBanned={onToggleBanned} />,
     }),
   ])
 }

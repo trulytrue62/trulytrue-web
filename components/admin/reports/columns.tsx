@@ -38,7 +38,7 @@ export function createReportColumns(onReview: (report: ScamReport) => void) {
         <StackedCell
           icon={identifierTypeIcons[info.row.original.identifierType]}
           primary={info.getValue()}
-          secondary={scamTypeLabel(info.row.original.scamType)}
+          secondary={info.row.original.region}
         />
       ),
     }),
@@ -52,21 +52,19 @@ export function createReportColumns(onReview: (report: ScamReport) => void) {
         </div>
       ),
     }),
-    columnHelper.accessor("region", {
-      id: "location",
-      header: content.location,
+    columnHelper.accessor("createdBy", {
+      id: "reportedBy",
+      header: content.submittedBy,
       sortFn: "text",
-      cell: (info) => (
-        <StackedCell
-          primary={info.getValue()}
-          secondary={getMockUserById(info.row.original.createdBy)?.email}
-        />
-      ),
+      cell: (info) => {
+        const submitter = getMockUserById(info.getValue())
+        return <StackedCell primary={submitter?.name ?? "Unknown"} secondary={submitter?.email} />
+      },
     }),
     columnHelper.accessor("status", {
       header: content.status,
+      enableSorting: false,
       filterFn: "equalsString",
-      sortFn: "alphanumeric",
       meta: { filterOptions: STATUS_FILTER_OPTIONS },
       cell: (info) => <ReportStatusBadge status={info.getValue()} />,
     }),
