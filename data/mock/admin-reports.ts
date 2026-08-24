@@ -1,4 +1,5 @@
-import { createAuditFields } from "@/types/audit"
+import { currentUser } from "@/data/mock/user"
+import { createAuditFields, touchAuditFields } from "@/types/audit"
 import type { ScamReport } from "@/types/report"
 
 export const mockAdminReports: ScamReport[] = [
@@ -118,6 +119,48 @@ export const mockAdminReports: ScamReport[] = [
     incidentDateTime: "2026-08-20T07:00:00.000Z",
     evidenceFileName: "interview-chat.png",
     ...createAuditFields("user-8", "2026-08-20T12:00:00.000Z"),
+  },
+  {
+    id: "report-11",
+    identifierType: "phone",
+    identifierValue: "+919900112233",
+    scamType: "otp-bank-fraud",
+    description: "Caller impersonated my bank's fraud department and asked for the OTP to \"cancel\" a suspicious transaction.",
+    status: "pending",
+    region: "Mumbai, Maharashtra",
+    incidentDateTime: "2026-08-20T10:00:00.000Z",
+    ...createAuditFields(currentUser.id, "2026-08-20T11:00:00.000Z"),
+  },
+  {
+    id: "report-12",
+    identifierType: "upi",
+    identifierValue: "cashback-offer@paytm",
+    scamType: "fake-investment",
+    description: "UPI handle used in a fake cashback scheme circulating in a WhatsApp group.",
+    status: "verified",
+    region: "Mumbai, Maharashtra",
+    incidentDateTime: "2026-08-12T09:00:00.000Z",
+    ...touchAuditFields(
+      createAuditFields(currentUser.id, "2026-08-12T10:00:00.000Z"),
+      currentUser.id,
+      "2026-08-21T09:30:00.000Z"
+    ),
+  },
+  {
+    id: "report-13",
+    identifierType: "url",
+    identifierValue: "urgent-kyc-update.in",
+    scamType: "phishing",
+    description: "Fake bank KYC-update page asking for card details and PIN.",
+    status: "info_requested",
+    infoRequestMessage: "Can you share the SMS or link you received so we can trace the source?",
+    region: "Mumbai, Maharashtra",
+    incidentDateTime: "2026-08-19T08:00:00.000Z",
+    ...touchAuditFields(
+      createAuditFields(currentUser.id, "2026-08-19T09:00:00.000Z"),
+      currentUser.id,
+      "2026-08-22T10:15:00.000Z"
+    ),
   },
 ]
 

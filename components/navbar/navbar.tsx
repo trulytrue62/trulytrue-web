@@ -16,9 +16,11 @@ import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-m
 import { accountMenuItems } from "@/components/navbar/account-menu-items"
 import { filterNavItemsByRole, loggedInNavItems, loggedOutNavItems } from "@/components/navbar/nav-items"
 import { NavDropdownMenuItem, NavItemLabel, NavMenuItem } from "@/components/navbar/nav-menu-item"
+import { NotificationBell } from "@/components/navbar/notification-bell"
 import { ThemeToggle } from "@/components/navbar/theme-toggle"
 import type { NavItem } from "@/types/nav"
 import type { User } from "@/types/user"
+import { Separator } from "../ui/separator"
 
 const loginItem = loggedOutNavItems.find((item) => item.route === "/login")!
 const reportItem = loggedOutNavItems.find((item) => item.route === "/report")!
@@ -59,6 +61,8 @@ export function Navbar({ user = null }: { user?: User | null }) {
         {user ? (
           <div className="flex shrink-0 items-center gap-1">
             <ThemeToggle />
+            <Separator orientation="vertical"/>
+            <NotificationBell userId={user.id} />
             <DropdownMenu>
               <DropdownMenuTrigger className="ml-1 rounded-full outline-none ring-2 ring-transparent transition-all duration-200 hover:ring-border aria-expanded:ring-border">
                 <Avatar>

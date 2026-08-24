@@ -2,10 +2,11 @@
 
 import { createColumnHelper } from "@tanstack/react-table"
 import { format } from "date-fns"
-import { AlertTriangleIcon, LightbulbIcon, Maximize2Icon, MegaphoneIcon, type LucideIcon } from "lucide-react"
+import { Maximize2Icon } from "lucide-react"
 
 import { AnnouncementActionsCell } from "@/components/admin/announcements/actions"
 import type { AnnouncementsTableFeatures } from "@/components/admin/announcements/features"
+import { ANNOUNCEMENT_TYPE_CONFIG as TYPE_CONFIG } from "@/components/admin/announcements/type-config"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { adminContent } from "@/data/mock/admin-content"
@@ -15,12 +16,6 @@ const content = adminContent.announcements.columns
 const typeContent = adminContent.announcements.type
 const statusContent = adminContent.announcements.status
 const columnHelper = createColumnHelper<AnnouncementsTableFeatures, Announcement>()
-
-const TYPE_CONFIG: Record<AnnouncementType, { icon: LucideIcon; className: string }> = {
-  alert: { icon: AlertTriangleIcon, className: "bg-rose-500/10 text-rose-600 dark:text-rose-400" },
-  update: { icon: MegaphoneIcon, className: "bg-sky-500/10 text-sky-600 dark:text-sky-400" },
-  tip: { icon: LightbulbIcon, className: "bg-violet-500/10 text-violet-600 dark:text-violet-400" },
-}
 
 const TYPE_FILTER_OPTIONS: { value: AnnouncementType; label: string }[] = [
   { value: "alert", label: typeContent.alert },
