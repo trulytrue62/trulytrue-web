@@ -54,10 +54,6 @@ export function StepReview({ form }: { form: UseFormReturn<ReportFormValues> }) 
             : undefined
         }
       />
-      <ReviewRow
-        label={content.location}
-        value={[values.region, values.country].filter(Boolean).join(", ")}
-      />
     </div>
   )
 }

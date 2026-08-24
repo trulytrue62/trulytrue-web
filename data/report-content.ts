@@ -40,20 +40,6 @@ export const reportContent = {
       title: "Evidence",
       fieldLabel: "Evidence (optional)",
     },
-    location: {
-      title: "Location",
-      country: {
-        label: "Country",
-        placeholder: "e.g. India",
-        description: "Auto-filled from your browser, feel free to correct it.",
-        error: "Enter a country",
-      },
-      region: {
-        label: "State / region",
-        placeholder: "e.g. Maharashtra",
-        error: "Enter a state or region",
-      },
-    },
     review: {
       title: "Review & submit",
       rows: {
@@ -62,7 +48,6 @@ export const reportContent = {
         description: "Description",
         evidence: "Evidence",
         incidentDateTime: "Incident date & time",
-        location: "Location",
       },
     },
   },

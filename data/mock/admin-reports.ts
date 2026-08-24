@@ -1,0 +1,133 @@
+import type { ScamReport } from "@/types/report"
+
+function audited(createdBy: string, createdAt: string) {
+  return { createdAt, createdBy, updatedAt: createdAt, updatedBy: createdBy, isDeleted: false }
+}
+
+export const mockAdminReports: ScamReport[] = [
+  {
+    id: "report-1",
+    identifierType: "upi",
+    identifierValue: "fastcash@oksbi",
+    scamType: "otp-bank-fraud",
+    description: "Asked for OTP claiming to verify a refund from my bank.",
+    status: "pending",
+    region: "Patna, Bihar",
+    incidentDateTime: "2026-08-09T18:00:00.000Z",
+    evidenceFileName: "otp-screenshot.png",
+    ...audited("user-1", "2026-08-10T10:15:00.000Z"),
+  },
+  {
+    id: "report-2",
+    identifierType: "phone",
+    identifierValue: "+919812345670",
+    scamType: "impersonation",
+    description: "Caller claimed to be from the electricity board threatening disconnection.",
+    status: "verified",
+    region: "Lucknow, Uttar Pradesh",
+    incidentDateTime: "2026-08-06T13:00:00.000Z",
+    ...audited("user-2", "2026-08-06T14:40:00.000Z"),
+  },
+  {
+    id: "report-3",
+    identifierType: "url",
+    identifierValue: "quick-loan-approve.in",
+    scamType: "loan-scam",
+    description: "Site asks for an upfront processing fee before disbursing any loan.",
+    status: "pending",
+    region: "Pune, Maharashtra",
+    incidentDateTime: "2026-08-13T09:30:00.000Z",
+    evidenceFileName: "loan-site-screenshot.png",
+    ...audited("user-3", "2026-08-14T08:05:00.000Z"),
+  },
+  {
+    id: "report-4",
+    identifierType: "email",
+    identifierValue: "support@amaz0n-rewards.com",
+    scamType: "phishing",
+    description: "Email says I won a gift card, link goes to a lookalike login page.",
+    status: "rejected",
+    rejectionReason: "Domain doesn't match any known lookalike pattern and evidence was inconclusive.",
+    region: "Bengaluru, Karnataka",
+    incidentDateTime: "2026-07-28T16:00:00.000Z",
+    ...audited("user-1", "2026-07-29T11:30:00.000Z"),
+  },
+  {
+    id: "report-5",
+    identifierType: "phone",
+    identifierValue: "+918899001122",
+    scamType: "job-scam",
+    description: "Offered a work-from-home job, asked for a registration deposit first.",
+    status: "info_requested",
+    infoRequestMessage: "Could you share a screenshot of the original message or job posting?",
+    region: "Ahmedabad, Gujarat",
+    incidentDateTime: "2026-08-15T11:00:00.000Z",
+    ...audited("user-4", "2026-08-16T09:50:00.000Z"),
+  },
+  {
+    id: "report-6",
+    identifierType: "upi",
+    identifierValue: "winnerclaim@ybl",
+    scamType: "fake-investment",
+    description: "Promised guaranteed 3x returns on a crypto investment within a week.",
+    status: "pending",
+    region: "Hyderabad, Telangana",
+    incidentDateTime: "2026-08-17T20:00:00.000Z",
+    evidenceFileName: "chat-export.pdf",
+    ...audited("user-5", "2026-08-18T16:20:00.000Z"),
+  },
+  {
+    id: "report-7",
+    identifierType: "url",
+    identifierValue: "mega-discount-store.shop",
+    scamType: "fake-ecommerce",
+    description: "Store took payment but never shipped the order, no way to contact them.",
+    status: "verified",
+    region: "Chennai, Tamil Nadu",
+    incidentDateTime: "2026-07-15T12:00:00.000Z",
+    ...audited("user-2", "2026-07-21T13:10:00.000Z"),
+  },
+  {
+    id: "report-8",
+    identifierType: "text",
+    identifierValue: "Hi, I'm Sarah from London, I feel a connection with you...",
+    scamType: "romance-scam",
+    description: "Started asking for money for a medical emergency after two weeks of chatting.",
+    status: "pending",
+    region: "Kolkata, West Bengal",
+    incidentDateTime: "2026-08-19T15:00:00.000Z",
+    ...audited("user-6", "2026-08-19T18:45:00.000Z"),
+  },
+  {
+    id: "report-9",
+    identifierType: "phone",
+    identifierValue: "+917722334455",
+    scamType: "otp-bank-fraud",
+    description: "Robocall said my card was blocked and to press 1 to speak to an agent.",
+    status: "rejected",
+    rejectionReason: "Duplicate of report-2, same underlying identifier once normalized.",
+    region: "Lucknow, Uttar Pradesh",
+    incidentDateTime: "2026-08-07T22:00:00.000Z",
+    ...audited("user-7", "2026-08-08T07:55:00.000Z"),
+  },
+  {
+    id: "report-10",
+    identifierType: "email",
+    identifierValue: "hr@global-remote-careers.net",
+    scamType: "job-scam",
+    description: "Interview conducted entirely over chat, offered the role instantly, asked for laptop deposit.",
+    status: "pending",
+    region: "Noida, Uttar Pradesh",
+    incidentDateTime: "2026-08-20T07:00:00.000Z",
+    evidenceFileName: "interview-chat.png",
+    ...audited("user-8", "2026-08-20T12:00:00.000Z"),
+  },
+]
+
+export function getMockReportsBySubmitter(submitterId: string): ScamReport[] {
+  return mockAdminReports.filter((report) => report.createdBy === submitterId)
+}
+
+export function getMockReportCountBySubmitter(submitterId: string): number {
+  return getMockReportsBySubmitter(submitterId).length
+}

@@ -16,7 +16,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { reportContent } from "@/data/report-content"
+import { currentUser } from "@/data/mock/user"
 import { detectIdentifierType } from "@/utils/identifier"
+import { detectApproximateRegion } from "@/utils/geo"
 import { ReportProgress } from "@/components/report-form/report-progress"
 import { ReportSummary } from "@/components/report-form/report-summary"
 import {
@@ -28,7 +30,6 @@ import {
 import { SimilarReportsSidebar } from "@/components/report-form/similar-reports-sidebar"
 import { StepEvidence } from "@/components/report-form/steps/step-evidence"
 import { StepIdentifier } from "@/components/report-form/steps/step-identifier"
-import { StepLocation } from "@/components/report-form/steps/step-location"
 import { StepReview } from "@/components/report-form/steps/step-review"
 import { StepScamDetails } from "@/components/report-form/steps/step-scam-details"
 import type { ScamReport } from "@/types/report"
@@ -37,7 +38,6 @@ const STEP_COMPONENTS = [
   StepIdentifier,
   StepScamDetails,
   StepEvidence,
-  StepLocation,
   StepReview,
 ]
 
@@ -86,6 +86,17 @@ export function ReportForm() {
   const isLastStep = currentStep === REPORT_STEPS.length - 1
   const StepComponent = STEP_COMPONENTS[currentStep]
 
+  useEffect(() => {
+    if (form.getValues("region")) {
+      return
+    }
+    const detected = detectApproximateRegion()
+    if (detected) {
+      form.setValue("region", detected)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   async function goNext() {
     const fields = REPORT_STEPS[currentStep].fields
     const valid = fields.length === 0 || (await form.trigger(fields))
@@ -112,18 +123,22 @@ export function ReportForm() {
     const incidentDateTime = new Date(values.incidentDate)
     incidentDateTime.setHours(hours, minutes)
 
+    const now = new Date().toISOString()
     const report: ScamReport = {
+      id: crypto.randomUUID(),
       identifierType: detectIdentifierType(values.identifierValue) ?? "phone",
       identifierValue: values.identifierValue,
       scamType: values.scamType,
       description: values.description,
       evidenceFileName: values.evidence?.name,
       incidentDateTime: incidentDateTime.toISOString(),
-      country: values.country,
       region: values.region,
       status: "pending",
-      submitterId: null,
-      submittedAt: new Date().toISOString(),
+      createdAt: now,
+      createdBy: currentUser.id,
+      updatedAt: now,
+      updatedBy: currentUser.id,
+      isDeleted: false,
     }
 
     console.log("Scam report submitted", report)

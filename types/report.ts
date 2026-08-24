@@ -1,17 +1,20 @@
+import type { AuditFields } from "@/types/audit"
+
 export type IdentifierType = "phone" | "url" | "email" | "upi" | "text"
 
-export type ReportStatus = "pending" | "verified" | "rejected"
+export type ReportStatus = "pending" | "verified" | "rejected" | "info_requested"
 
-export type ScamReport = {
+export type ScamReport = AuditFields & {
+  id: string
   identifierType: IdentifierType
   identifierValue: string
   scamType: string
   description: string
   evidenceFileName?: string
   incidentDateTime: string
-  country: string
   region: string
   status: ReportStatus
-  submitterId: string | null
-  submittedAt: string
+  rejectionReason?: string
+  infoRequestMessage?: string
+  infoRequestAttachmentName?: string
 }

@@ -12,6 +12,7 @@ export type NavItem = {
 }
 
 export type NavUser = {
+  id: string
   name: string
   image?: string
   roles?: string[]
