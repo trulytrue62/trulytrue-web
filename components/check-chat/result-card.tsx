@@ -15,18 +15,18 @@ import type { CheckResult } from "@/data/mock/check-analysis"
 const VERDICT_STYLES = {
   safe: {
     icon: CheckCircle2Icon,
-    gaugeColor: "#10b981",
-    badgeClassName: "bg-emerald-500/10 text-emerald-600",
+    gaugeColor: "var(--color-safe)",
+    badgeClassName: "bg-safe/10 text-safe",
   },
   suspicious: {
     icon: AlertTriangleIcon,
-    gaugeColor: "#f59e0b",
-    badgeClassName: "bg-amber-500/10 text-amber-600",
+    gaugeColor: "var(--color-suspicious)",
+    badgeClassName: "bg-suspicious/10 text-suspicious",
   },
   unsafe: {
     icon: ShieldAlertIcon,
-    gaugeColor: "#ef4444",
-    badgeClassName: "bg-destructive/10 text-destructive",
+    gaugeColor: "var(--color-danger)",
+    badgeClassName: "bg-danger/10 text-danger",
   },
 } as const
 
@@ -37,7 +37,7 @@ export function ResultCard({ result }: { result: CheckResult }) {
   const verdictContent = checkContent.verdict[result.verdict]
 
   return (
-    <div className="w-full rounded-3xl border border-border/60 bg-card p-5 shadow-sm">
+    <div className="surface-card w-full p-5 shadow-sm">
       <div className="flex items-start gap-4">
         <AnimatedCircularProgressBar
           value={result.score}

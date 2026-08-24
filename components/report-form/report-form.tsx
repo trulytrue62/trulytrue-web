@@ -145,7 +145,7 @@ export function ReportForm() {
           <ReportSummary form={form} onViewSimilarReports={() => setSimilarReportsOpen(true)} />
         )}
 
-        <div className="overflow-hidden rounded-3xl border border-border/60 bg-card p-6 shadow-sm">
+        <div className="surface-card overflow-hidden p-6 shadow-sm">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentStep}

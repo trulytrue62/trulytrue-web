@@ -2,6 +2,7 @@ import Link from "next/link"
 import { motion } from "motion/react"
 
 import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import {
   NavigationMenuContent,
@@ -14,9 +15,9 @@ import type { NavItem } from "@/types/nav"
 
 function NavItemBadge({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] leading-none font-medium text-primary">
+    <Badge variant="soft" className="h-auto px-1.5 py-0.5 text-[10px] leading-none">
       {children}
-    </span>
+    </Badge>
   )
 }
 

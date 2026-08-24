@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Navbar } from "@/components/navbar/navbar"
-import { LightRays } from "@/components/ui/light-rays"
 import { currentUser } from "@/data/mock/user"
 
 const notoSans = Noto_Sans({ subsets: ['latin'], variable: '--font-sans' })

@@ -1,10 +1,4 @@
-import {
-  FileTextIcon,
-  FlagIcon,
-  LogInIcon,
-  MegaphoneIcon,
-  UsersIcon,
-} from "lucide-react"
+import { FileTextIcon, MegaphoneIcon, UsersIcon } from "lucide-react"
 
 import type { NavItem } from "@/types/nav"
 
@@ -14,9 +8,9 @@ export const loggedOutNavItems: NavItem[] = [
 ]
 
 export const loggedInNavItems: NavItem[] = [
-  { route: "/dashboard", label: "Trends"},
-  { route: "/check", label: "Check"},
-    { route: "/report", label: "Report"},
+  { route: "/dashboard", label: "Trends" },
+  { route: "/check", label: "Check" },
+  { route: "/report", label: "Report" },
   {
     route: "/admin",
     label: "Admin",

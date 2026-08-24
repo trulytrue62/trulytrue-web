@@ -1,14 +1,13 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Image from "next/image"
 
 import { DotPattern } from "@/components/ui/dot-pattern"
 import { checkContent } from "@/data/check-content"
 import { analyzeMessage } from "@/data/mock/check-analysis"
+import { AssistantAvatar } from "@/components/check-chat/assistant-avatar"
 import { ChatComposer } from "@/components/check-chat/chat-composer"
 import { ChatMessageItem } from "@/components/check-chat/chat-message"
-import logo from "@/public/logo.png"
 import type { ChatAttachment, ChatMessage } from "@/types/chat"
 
 const ANALYZE_DELAY_MS = 700
@@ -20,9 +19,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
 function TypingIndicator() {
   return (
     <div className="flex gap-3">
-      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted">
-        <Image src={logo} alt="Assistant" className="size-5" />
-      </div>
+      <AssistantAvatar />
       <div className="flex w-fit items-center gap-1 rounded-3xl bg-muted px-4 py-3">
         {[0, 1, 2].map((index) => (
           <span

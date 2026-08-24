@@ -13,6 +13,20 @@
     }
 }
 
+/* Floating, frosted surface used by the navbar pill and chat composer. */
+@utility glass-panel {
+    @apply border border-border/60 bg-card/80 shadow-lg backdrop-blur-xl transition-shadow duration-300;
+
+    &:hover {
+        @apply shadow-xl;
+    }
+}
+
+/* Flat elevated surface used for cards, form panels and summary bars. */
+@utility surface-card {
+    @apply rounded-3xl border border-border/60 bg-card;
+}
+
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: var(--font-sans);
@@ -47,6 +61,9 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
+    --color-safe: #10b981;
+    --color-suspicious: #f59e0b;
+    --color-danger: #ef4444;
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
