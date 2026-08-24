@@ -5,7 +5,7 @@ import { format } from "date-fns"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { ReportStatusBadge } from "@/components/admin/status-badge"
 import { adminContent } from "@/data/mock/admin-content"
-import { scamTypeLabel } from "@/components/admin/reports/columns"
+import { getScamTypeLabel } from "@/data/mock/scam-types"
 import { identifierTypeIcons } from "@/utils/identifier"
 import type { User } from "@/types/user"
 import type { ScamReport } from "@/types/report"
@@ -58,7 +58,7 @@ export function UserDetailDialog({
                         <div className="flex min-w-0 flex-col">
                           <span className="truncate font-medium text-foreground">{report.identifierValue}</span>
                           <span className="text-xs text-muted-foreground">
-                            {scamTypeLabel(report.scamType)} &middot; {format(new Date(report.createdAt), "MMM d, yyyy")}
+                            {getScamTypeLabel(report.scamType)} &middot; {format(new Date(report.createdAt), "MMM d, yyyy")}
                           </span>
                         </div>
                       </div>

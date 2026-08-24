@@ -12,13 +12,13 @@ const typeContent = adminContent.announcements.type
 
 export function AnnouncementsFeed({ announcements }: { announcements: Announcement[] }) {
   return (
-    <div className="surface-card flex flex-col gap-4 p-6">
-      <h2 className="text-lg font-medium text-foreground">{content.title}</h2>
+    <div className="glass-panel flex h-full min-h-0 flex-col gap-4 overflow-hidden rounded-3xl p-6">
+      <h2 className="shrink-0 text-lg font-medium text-foreground">{content.title}</h2>
 
       {announcements.length === 0 ? (
         <p className="text-sm text-muted-foreground">{content.empty}</p>
       ) : (
-        <ul className="flex flex-col gap-4">
+        <ul className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
           {announcements.map((announcement) => {
             const { icon: Icon, className } = ANNOUNCEMENT_TYPE_CONFIG[announcement.type]
 

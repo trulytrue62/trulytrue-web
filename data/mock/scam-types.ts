@@ -14,3 +14,7 @@ export const scamTypes: ScamTypeOption[] = [
   { value: "otp-bank-fraud", label: "OTP / bank fraud" },
   { value: "other", label: "Other" },
 ]
+
+export function getScamTypeLabel(value: string): string {
+  return scamTypes.find((type) => type.value === value)?.label ?? value
+}

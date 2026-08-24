@@ -1,9 +1,19 @@
 import { AnnouncementsFeed } from "@/components/dashboard/announcements-feed"
+import { DashboardComposer } from "@/components/dashboard/dashboard-composer"
+import { MostReportedCard } from "@/components/dashboard/most-reported-card"
 import { MyReportsList } from "@/components/dashboard/my-reports-list"
+import { RecentReportsFeed } from "@/components/dashboard/recent-reports-feed"
+import { TopRegionsCard } from "@/components/dashboard/top-regions-card"
+import { TrendingScamsCard } from "@/components/dashboard/trending-scams-card"
 import { mockAnnouncements } from "@/data/mock/admin-announcements"
 import { getMockReportsBySubmitter } from "@/data/mock/admin-reports"
+import {
+  getMockMostReportedIdentifiers,
+  getMockRecentReports,
+  getMockTopRegions,
+  getMockTrendingScamTypes,
+} from "@/data/mock/community"
 import { currentUser } from "@/data/mock/user"
-import { dashboardContent } from "@/data/mock/dashboard-content"
 
 export default function DashboardPage() {
   const announcements = mockAnnouncements
@@ -15,15 +25,23 @@ export default function DashboardPage() {
   )
 
   return (
-    <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-2xl font-medium text-foreground">{dashboardContent.page.title}</h1>
-        <p className="text-sm text-muted-foreground">{dashboardContent.page.description}</p>
+    <div className="grid h-full min-h-0 grid-rows-[auto_2fr_1fr] gap-6">
+      <DashboardComposer />
+
+      <div className="grid min-h-0 grid-cols-4 gap-6">
+        <div className="col-span-4 min-h-0 lg:col-span-2">
+          <RecentReportsFeed reports={getMockRecentReports(8)} />
+        </div>
+        <div className="col-span-4 grid min-h-0 grid-rows-3 gap-4 lg:col-span-2">
+          <TrendingScamsCard items={getMockTrendingScamTypes()} />
+          <MostReportedCard items={getMockMostReportedIdentifiers()} />
+          <TopRegionsCard items={getMockTopRegions()} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <AnnouncementsFeed announcements={announcements} />
+      <div className="grid min-h-0 grid-cols-1 gap-6 lg:grid-cols-2">
         <MyReportsList reports={myReports} />
+        <AnnouncementsFeed announcements={announcements} />
       </div>
     </div>
   )

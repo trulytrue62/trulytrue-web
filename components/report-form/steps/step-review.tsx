@@ -5,7 +5,7 @@ import { useWatch, type UseFormReturn } from "react-hook-form"
 
 import { DetailRow } from "@/components/ui/detail-row"
 import { reportContent } from "@/data/mock/report-content"
-import { scamTypes } from "@/data/mock/scam-types"
+import { getScamTypeLabel } from "@/data/mock/scam-types"
 import { detectIdentifierType, identifierTypeIcons, identifierTypeLabels } from "@/utils/identifier"
 import type { ReportFormValues } from "@/schemas/report-schema"
 
@@ -15,7 +15,7 @@ export function StepReview({ form }: { form: UseFormReturn<ReportFormValues> }) 
   const values = useWatch({ control: form.control })
   const detected = detectIdentifierType(values.identifierValue ?? "")
   const DetectedIcon = detected ? identifierTypeIcons[detected] : null
-  const scamTypeLabel = scamTypes.find((type) => type.value === values.scamType)?.label
+  const scamTypeLabel = values.scamType ? getScamTypeLabel(values.scamType) : undefined
 
   return (
     <div className="flex flex-col gap-1">

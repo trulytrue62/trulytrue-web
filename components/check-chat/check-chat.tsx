@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 
 import { DotPattern } from "@/components/ui/dot-pattern"
 import { checkContent } from "@/data/mock/check-content"
@@ -43,13 +44,27 @@ function TypingIndicator() {
 }
 
 export function CheckChat() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const endRef = useRef<HTMLDivElement>(null)
+  const hasSentPrefill = useRef(false)
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, isAnalyzing])
+
+  useEffect(() => {
+    const prefilledMessage = searchParams.get("message")
+    if (!prefilledMessage || hasSentPrefill.current) {
+      return
+    }
+    hasSentPrefill.current = true
+    handleSend(prefilledMessage)
+    router.replace("/check")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
 
   function handleSend(text: string, attachment?: ChatAttachment) {
     const trimmed = text.trim()

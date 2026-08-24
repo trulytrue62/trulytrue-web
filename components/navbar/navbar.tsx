@@ -18,9 +18,9 @@ import { filterNavItemsByRole, loggedInNavItems, loggedOutNavItems } from "@/com
 import { NavDropdownMenuItem, NavItemLabel, NavMenuItem } from "@/components/navbar/nav-menu-item"
 import { NotificationBell } from "@/components/navbar/notification-bell"
 import { ThemeToggle } from "@/components/navbar/theme-toggle"
+import { Separator } from "@/components/ui/separator"
 import type { NavItem } from "@/types/nav"
 import type { User } from "@/types/user"
-import { Separator } from "../ui/separator"
 
 const loginItem = loggedOutNavItems.find((item) => item.route === "/login")!
 const reportItem = loggedOutNavItems.find((item) => item.route === "/report")!
@@ -61,7 +61,7 @@ export function Navbar({ user = null }: { user?: User | null }) {
         {user ? (
           <div className="flex shrink-0 items-center gap-1">
             <ThemeToggle />
-            <Separator orientation="vertical"/>
+            <Separator orientation="vertical" className="h-4 self-center data-vertical:self-center" />
             <NotificationBell userId={user.id} />
             <DropdownMenu>
               <DropdownMenuTrigger className="ml-1 rounded-full outline-none ring-2 ring-transparent transition-all duration-200 hover:ring-border aria-expanded:ring-border">

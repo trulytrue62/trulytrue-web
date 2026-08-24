@@ -3,11 +3,12 @@
 import { useMemo, useState } from "react"
 
 import { AdminPageHeader } from "@/components/admin/admin-page-header"
-import { createReportColumns, scamTypeLabel } from "@/components/admin/reports/columns"
+import { createReportColumns } from "@/components/admin/reports/columns"
 import { features } from "@/components/admin/reports/features"
 import { DataTable } from "@/components/ui/data-table"
 import { adminContent } from "@/data/mock/admin-content"
 import { getMockUserById } from "@/data/mock/admin-users"
+import { getScamTypeLabel } from "@/data/mock/scam-types"
 import type { ScamReport } from "@/types/report"
 
 const content = adminContent.reports
@@ -28,7 +29,7 @@ export function ReportsTable({
     }
     return reports.filter((report) => {
       const submitterName = getMockUserById(report.createdBy)?.name ?? ""
-      return [report.identifierValue, scamTypeLabel(report.scamType), report.region, submitterName]
+      return [report.identifierValue, getScamTypeLabel(report.scamType), report.region, submitterName]
         .join(" ")
         .toLowerCase()
         .includes(query)

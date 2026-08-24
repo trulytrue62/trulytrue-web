@@ -11,10 +11,10 @@ import { IconRevealButton } from "@/components/ui/icon-reveal-button"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { ReportStatusBadge } from "@/components/admin/status-badge"
-import { scamTypeLabel } from "@/components/admin/reports/columns"
 import type { ReportDecision } from "@/components/admin/reports/decision"
 import { adminContent } from "@/data/mock/admin-content"
 import { getMockUserById } from "@/data/mock/admin-users"
+import { getScamTypeLabel } from "@/data/mock/scam-types"
 import { identifierTypeIcons } from "@/utils/identifier"
 import type { ScamReport } from "@/types/report"
 
@@ -105,7 +105,7 @@ export function ReportDetailDialog({
             </div>
 
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
-              <Badge variant="soft">{scamTypeLabel(activeReport.scamType)}</Badge>
+              <Badge variant="soft">{getScamTypeLabel(activeReport.scamType)}</Badge>
               <span className="flex items-center gap-1.5">
                 <MapPinIcon className="size-4 shrink-0" />
                 {activeReport.region}
