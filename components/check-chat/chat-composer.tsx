@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from "react"
 import { ArrowUpIcon, FileIcon, PaperclipIcon, XIcon } from "lucide-react"
 import Image from "next/image"
 
-import { BorderBeam } from "@/components/ui/border-beam"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { checkContent } from "@/data/check-content"
+import { checkContent } from "@/data/mock/check-content"
 import type { ChatAttachment } from "@/types/chat"
 
 type PendingAttachment = {
@@ -105,8 +104,7 @@ export function ChatComposer({
         </div>
       )}
 
-      <div className="focus-within:ring-3 focus-within:ring-ring/30 relative flex items-end gap-2 overflow-hidden rounded-[28px] border border-border bg-card p-2 shadow-lg backdrop-blur-xl transition-shadow">
-        <BorderBeam size={80} duration={8} colorFrom="#38bdf8" colorTo="#3b82f6" />
+      <div className="glass-panel focus-within:ring-3 focus-within:ring-ring/30 relative flex items-end gap-2 overflow-hidden rounded-[28px] p-2">
         <input
           ref={fileInputRef}
           type="file"

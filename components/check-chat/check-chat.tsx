@@ -1,28 +1,35 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Image from "next/image"
+import { useRouter, useSearchParams } from "next/navigation"
 
 import { DotPattern } from "@/components/ui/dot-pattern"
-import { checkContent } from "@/data/check-content"
+import { checkContent } from "@/data/mock/check-content"
 import { analyzeMessage } from "@/data/mock/check-analysis"
+import { currentUser } from "@/data/mock/user"
+import { AssistantAvatar } from "@/components/check-chat/assistant-avatar"
 import { ChatComposer } from "@/components/check-chat/chat-composer"
 import { ChatMessageItem } from "@/components/check-chat/chat-message"
-import logo from "@/public/logo.png"
+import { createAuditFields } from "@/types/audit"
 import type { ChatAttachment, ChatMessage } from "@/types/chat"
 
 const ANALYZE_DELAY_MS = 700
+const ASSISTANT_ACTOR_ID = "assistant"
 
 const INITIAL_MESSAGES: ChatMessage[] = [
-  { id: "greeting", role: "assistant", kind: "text", text: checkContent.greeting },
+  {
+    id: "greeting",
+    role: "assistant",
+    kind: "text",
+    text: checkContent.greeting,
+    ...createAuditFields(ASSISTANT_ACTOR_ID),
+  },
 ]
 
 function TypingIndicator() {
   return (
     <div className="flex gap-3">
-      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted">
-        <Image src={logo} alt="Assistant" className="size-5" />
-      </div>
+      <AssistantAvatar />
       <div className="flex w-fit items-center gap-1 rounded-3xl bg-muted px-4 py-3">
         {[0, 1, 2].map((index) => (
           <span
@@ -37,13 +44,27 @@ function TypingIndicator() {
 }
 
 export function CheckChat() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const endRef = useRef<HTMLDivElement>(null)
+  const hasSentPrefill = useRef(false)
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, isAnalyzing])
+
+  useEffect(() => {
+    const prefilledMessage = searchParams.get("message")
+    if (!prefilledMessage || hasSentPrefill.current) {
+      return
+    }
+    hasSentPrefill.current = true
+    handleSend(prefilledMessage)
+    router.replace("/check")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
 
   function handleSend(text: string, attachment?: ChatAttachment) {
     const trimmed = text.trim()
@@ -53,7 +74,14 @@ export function CheckChat() {
 
     setMessages((prev) => [
       ...prev,
-      { id: crypto.randomUUID(), role: "user", kind: "text", text: trimmed, attachment },
+      {
+        id: crypto.randomUUID(),
+        role: "user",
+        kind: "text",
+        text: trimmed,
+        attachment,
+        ...createAuditFields(currentUser.id),
+      },
     ])
     setIsAnalyzing(true)
 
@@ -61,7 +89,14 @@ export function CheckChat() {
       const result = analyzeMessage(trimmed)
       setMessages((prev) => [
         ...prev,
-        { id: crypto.randomUUID(), role: "assistant", kind: "result", text: trimmed, result },
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          kind: "result",
+          text: trimmed,
+          result,
+          ...createAuditFields(ASSISTANT_ACTOR_ID),
+        },
       ])
       setIsAnalyzing(false)
     }, ANALYZE_DELAY_MS)
@@ -69,11 +104,11 @@ export function CheckChat() {
 
   return (
     <div className="relative flex h-full min-h-0 flex-col">
-      <DotPattern
+      {/* <DotPattern
         width={28}
         height={28}
         className="text-primary/25 [mask-image:linear-gradient(to_top_left,black,transparent)]"
-      />
+      /> */}
 
       <div className="relative flex-1 overflow-y-auto">
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-8">
@@ -90,7 +125,7 @@ export function CheckChat() {
         <ChatComposer onSend={handleSend} disabled={isAnalyzing} />
         {messages.length === 1 && !isAnalyzing && (
           <div className="mx-auto flex w-full max-w-3xl flex-wrap justify-center gap-2">
-            {checkContent.examples.map((example) => (
+            {/* {checkContent.examples.map((example) => (
               <button
                 key={example}
                 type="button"
@@ -99,7 +134,7 @@ export function CheckChat() {
               >
                 {example}
               </button>
-            ))}
+            ))} */}
           </div>
         )}
       </div>

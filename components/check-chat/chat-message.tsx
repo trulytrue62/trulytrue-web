@@ -3,31 +3,22 @@ import { FileIcon } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { BlurFade } from "@/components/ui/blur-fade"
+import { AssistantAvatar } from "@/components/check-chat/assistant-avatar"
 import { ResultCard } from "@/components/check-chat/result-card"
 import { currentUser } from "@/data/mock/user"
 import { cn } from "@/lib/utils"
-import logo from "@/public/logo.png"
-import logoDark from "@/public/logo-dark.png"
 import type { ChatMessage } from "@/types/chat"
-import { useTheme } from "next-themes"
 
 function MessageAvatar({ isUser }: { isUser: boolean }) {
-
-  const {resolvedTheme} = useTheme()
-
-  if (isUser) {
-    return (
-      <Avatar className="shrink-0">
-        <AvatarImage src={currentUser.image} alt={currentUser.name} />
-        <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
-      </Avatar>
-    )
+  if (!isUser) {
+    return <AssistantAvatar />
   }
 
   return (
-    <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted">
-      <Image src={resolvedTheme === 'dark' ? logoDark : logo} alt="Assistant" className="size-5" />
-    </div>
+    <Avatar className="shrink-0">
+      <AvatarImage src={currentUser.image} alt={currentUser.name} />
+      <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+    </Avatar>
   )
 }
 

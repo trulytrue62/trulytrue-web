@@ -4,19 +4,15 @@ import { useEffect, useState } from "react"
 import confetti from "canvas-confetti"
 import { AnimatePresence, motion } from "motion/react"
 import { useSearchParams } from "next/navigation"
-import { CheckCircle2Icon } from "lucide-react"
+import { CheckCircle2Icon, LockIcon, ShieldCheckIcon } from "lucide-react"
 import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet"
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
+import { currentUser } from "@/data/mock/user"
 import { detectIdentifierType } from "@/utils/identifier"
+import { detectApproximateRegion } from "@/utils/geo"
 import { ReportProgress } from "@/components/report-form/report-progress"
 import { ReportSummary } from "@/components/report-form/report-summary"
 import {
@@ -25,19 +21,18 @@ import {
   reportFormSchema,
   type ReportFormValues,
 } from "@/schemas/report-schema"
-import { SimilarReportsSidebar } from "@/components/report-form/similar-reports-sidebar"
+import { SimilarReportsDialog } from "@/components/report-form/similar-reports-dialog"
 import { StepEvidence } from "@/components/report-form/steps/step-evidence"
 import { StepIdentifier } from "@/components/report-form/steps/step-identifier"
-import { StepLocation } from "@/components/report-form/steps/step-location"
 import { StepReview } from "@/components/report-form/steps/step-review"
 import { StepScamDetails } from "@/components/report-form/steps/step-scam-details"
+import { createAuditFields } from "@/types/audit"
 import type { ScamReport } from "@/types/report"
 
 const STEP_COMPONENTS = [
   StepIdentifier,
   StepScamDetails,
   StepEvidence,
-  StepLocation,
   StepReview,
 ]
 
@@ -86,6 +81,17 @@ export function ReportForm() {
   const isLastStep = currentStep === REPORT_STEPS.length - 1
   const StepComponent = STEP_COMPONENTS[currentStep]
 
+  useEffect(() => {
+    if (form.getValues("region")) {
+      return
+    }
+    const detected = detectApproximateRegion()
+    if (detected) {
+      form.setValue("region", detected)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   async function goNext() {
     const fields = REPORT_STEPS[currentStep].fields
     const valid = fields.length === 0 || (await form.trigger(fields))
@@ -113,17 +119,16 @@ export function ReportForm() {
     incidentDateTime.setHours(hours, minutes)
 
     const report: ScamReport = {
+      id: crypto.randomUUID(),
       identifierType: detectIdentifierType(values.identifierValue) ?? "phone",
       identifierValue: values.identifierValue,
       scamType: values.scamType,
       description: values.description,
       evidenceFileName: values.evidence?.name,
       incidentDateTime: incidentDateTime.toISOString(),
-      country: values.country,
       region: values.region,
       status: "pending",
-      submitterId: null,
-      submittedAt: new Date().toISOString(),
+      ...createAuditFields(currentUser.id),
     }
 
     console.log("Scam report submitted", report)
@@ -135,57 +140,64 @@ export function ReportForm() {
   }
 
   return (
-    <div className="flex w-full flex-col gap-10 lg:flex-row">
-      <aside className="w-full shrink-0 border-border/60 lg:w-72 lg:border-r lg:pr-8">
-        <ReportProgress currentStep={currentStep} />
-      </aside>
+    <div className="flex h-full min-h-0 flex-col gap-8">
+      <div className="flex w-full flex-1 flex-col gap-10 lg:flex-row">
+        <aside className="w-full shrink-0 border-border/60 lg:w-72 lg:border-r lg:pr-8">
+          <ReportProgress currentStep={currentStep} />
+        </aside>
 
-      <div className="flex min-w-0 flex-1 flex-col gap-6">
-        {currentStep > 0 && (
-          <ReportSummary form={form} onViewSimilarReports={() => setSimilarReportsOpen(true)} />
-        )}
+        <div className="flex min-w-0 flex-1 flex-col gap-6">
+          <div className="surface-card overflow-hidden p-6 shadow-sm">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={currentStep}
+                custom={direction}
+                variants={stepVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.2, ease: "easeOut" }}
+              >
+                <StepComponent form={form} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-        <div className="overflow-hidden rounded-3xl border border-border/60 bg-card p-6 shadow-sm">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={currentStep}
-              custom={direction}
-              variants={stepVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.2, ease: "easeOut" }}
+          <div className="flex items-center justify-between">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={goBack}
+              disabled={currentStep === 0}
             >
-              <StepComponent form={form} />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={goBack}
-            disabled={currentStep === 0}
-          >
-            {reportContent.actions.back}
-          </Button>
-          <Button type="button" onClick={goNext}>
-            {isLastStep ? reportContent.actions.submit : reportContent.actions.next}
-          </Button>
+              {reportContent.actions.back}
+            </Button>
+            <Button type="button" onClick={goNext}>
+              {isLastStep ? reportContent.actions.submit : reportContent.actions.next}
+            </Button>
+          </div>
         </div>
       </div>
 
-      <Sheet open={similarReportsOpen} onOpenChange={setSimilarReportsOpen} modal={false}>
-        <SheetContent side="right" overlay={false}>
-          <SheetHeader>
-            <SheetTitle>{reportContent.similarReportsDrawer.title}</SheetTitle>
-          </SheetHeader>
-          <div className="px-6 pb-6">
-            <SimilarReportsSidebar identifierValue={identifierValue ?? ""} />
-          </div>
-        </SheetContent>
-      </Sheet>
+      {currentStep > 0 && <div className="flex justify-center"><ReportSummary  form={form} onViewSimilarReports={() => setSimilarReportsOpen(true)} /> </div>}
+
+      <footer className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1.5">
+          <ShieldCheckIcon className="size-3.5" />
+          {reportContent.footer.reviewed}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <LockIcon className="size-3.5" />
+          {reportContent.footer.private}
+        </span>
+      </footer>
+
+      <SimilarReportsDialog
+        identifierValue={identifierValue ?? ""}
+        open={similarReportsOpen}
+        onOpenChange={setSimilarReportsOpen}
+        title={reportContent.similarReportsDrawer.title}
+      />
     </div>
   )
 }

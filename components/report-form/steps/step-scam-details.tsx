@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
 import { scamTypes } from "@/data/mock/scam-types"
 import type { ReportFormValues } from "@/schemas/report-schema"
 
