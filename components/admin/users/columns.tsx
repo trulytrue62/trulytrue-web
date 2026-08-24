@@ -8,7 +8,7 @@ import type { UsersTableFeatures } from "@/components/admin/users/features"
 import { UserStatusBadge } from "@/components/admin/status-badge"
 import { Badge } from "@/components/ui/badge"
 import { StackedCell } from "@/components/ui/stacked-cell"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import { getMockReportCountBySubmitter } from "@/data/mock/admin-reports"
 import type { User, UserRole, UserStatus } from "@/types/user"
 

@@ -4,7 +4,7 @@ import { SearchIcon } from "lucide-react"
 import { useWatch, type UseFormReturn } from "react-hook-form"
 
 import { ShineBorder } from "@/components/ui/shine-border"
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
 import type { ReportFormValues } from "@/schemas/report-schema"
 
 const content = reportContent.summary

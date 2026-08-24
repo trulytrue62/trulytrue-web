@@ -10,7 +10,7 @@ import { IconRevealButton } from "@/components/ui/icon-reveal-button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import type { Announcement, AnnouncementType } from "@/types/admin"
 
 const content = adminContent.announcements.dialog

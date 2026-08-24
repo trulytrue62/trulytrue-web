@@ -6,7 +6,7 @@ import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { checkContent } from "@/data/check-content"
+import { checkContent } from "@/data/mock/check-content"
 import type { ChatAttachment } from "@/types/chat"
 
 type PendingAttachment = {

@@ -1,7 +1,7 @@
 import { CircleDashedIcon, CircleHelpIcon, CircleXIcon, CircleCheckIcon, BanIcon, type LucideIcon } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import { cn } from "@/lib/utils"
 import type { UserStatus } from "@/types/user"
 import type { ReportStatus } from "@/types/report"

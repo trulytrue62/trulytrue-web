@@ -6,7 +6,7 @@ import { AdminPageHeader } from "@/components/admin/admin-page-header"
 import { createReportColumns, scamTypeLabel } from "@/components/admin/reports/columns"
 import { features } from "@/components/admin/reports/features"
 import { DataTable } from "@/components/ui/data-table"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import { getMockUserById } from "@/data/mock/admin-users"
 import type { ScamReport } from "@/types/report"
 

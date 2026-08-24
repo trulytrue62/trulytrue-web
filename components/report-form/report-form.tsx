@@ -9,7 +9,7 @@ import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { Button } from "@/components/ui/button"
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
 import { currentUser } from "@/data/mock/user"
 import { detectIdentifierType } from "@/utils/identifier"
 import { detectApproximateRegion } from "@/utils/geo"

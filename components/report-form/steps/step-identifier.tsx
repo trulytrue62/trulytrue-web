@@ -5,7 +5,7 @@ import { useWatch, type UseFormReturn } from "react-hook-form"
 
 import { Field, FieldError, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
 import { detectIdentifierType, identifierTypeIcons, identifierTypeLabels } from "@/utils/identifier"
 import type { ReportFormValues } from "@/schemas/report-schema"
 

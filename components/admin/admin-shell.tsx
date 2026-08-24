@@ -17,7 +17,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import { mockAdminReports } from "@/data/mock/admin-reports"
 import type { ScamReport } from "@/types/report"
 

@@ -1,7 +1,7 @@
 import { format } from "date-fns"
 import { z } from "zod"
 
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
 import { scamTypes } from "@/data/mock/scam-types"
 import { detectIdentifierType } from "@/utils/identifier"
 

@@ -4,7 +4,7 @@ import { format } from "date-fns"
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { ReportStatusBadge } from "@/components/admin/status-badge"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import { scamTypeLabel } from "@/components/admin/reports/columns"
 import { identifierTypeIcons } from "@/utils/identifier"
 import type { User } from "@/types/user"

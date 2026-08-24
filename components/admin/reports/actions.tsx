@@ -3,7 +3,7 @@
 import { EyeIcon } from "lucide-react"
 
 import { RowActionsMenu } from "@/components/ui/row-actions-menu"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import type { ScamReport } from "@/types/report"
 
 export function ReportActionsCell({

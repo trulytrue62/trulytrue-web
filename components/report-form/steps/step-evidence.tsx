@@ -4,7 +4,7 @@ import type { UseFormReturn } from "react-hook-form"
 
 import { Field, FieldError, FieldLabel } from "@/components/ui/field"
 import { FileUpload } from "@/components/ui/file-upload"
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
 import type { ReportFormValues } from "@/schemas/report-schema"
 
 const content = reportContent.steps.evidence

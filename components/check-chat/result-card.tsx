@@ -6,7 +6,7 @@ import { AlertTriangleIcon, CheckCircle2Icon, ShieldAlertIcon } from "lucide-rea
 
 import { AnimatedCircularProgressBar } from "@/components/ui/animated-circular-progress-bar"
 import { Button } from "@/components/ui/button"
-import { checkContent } from "@/data/check-content"
+import { checkContent } from "@/data/mock/check-content"
 import { cn } from "@/lib/utils"
 import { SimilarReportsDialog } from "@/components/report-form/similar-reports-dialog"
 import type { CheckResult } from "@/data/mock/check-analysis"

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react"
 import { SearchIcon, ShieldCheckIcon } from "lucide-react"
 
 import { Skeleton } from "@/components/ui/skeleton"
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
 import { detectIdentifierType } from "@/utils/identifier"
 import { getMockSimilarReports, type SimilarReportsResult } from "@/data/mock/similar-reports"
 

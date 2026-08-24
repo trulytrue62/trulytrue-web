@@ -4,7 +4,7 @@ import { format } from "date-fns"
 import { useWatch, type UseFormReturn } from "react-hook-form"
 
 import { DetailRow } from "@/components/ui/detail-row"
-import { reportContent } from "@/data/report-content"
+import { reportContent } from "@/data/mock/report-content"
 import { scamTypes } from "@/data/mock/scam-types"
 import { detectIdentifierType, identifierTypeIcons, identifierTypeLabels } from "@/utils/identifier"
 import type { ReportFormValues } from "@/schemas/report-schema"

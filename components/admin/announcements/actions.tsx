@@ -3,7 +3,7 @@
 import { EyeIcon, EyeOffIcon, PencilIcon } from "lucide-react"
 
 import { RowActionsMenu, type RowAction } from "@/components/ui/row-actions-menu"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import type { Announcement } from "@/types/admin"
 
 export function AnnouncementActionsCell({

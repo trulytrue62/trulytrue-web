@@ -8,7 +8,7 @@ import { AnnouncementActionsCell } from "@/components/admin/announcements/action
 import type { AnnouncementsTableFeatures } from "@/components/admin/announcements/features"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import type { Announcement, AnnouncementType } from "@/types/admin"
 
 const content = adminContent.announcements.columns

@@ -9,7 +9,7 @@ import { createAnnouncementColumns } from "@/components/admin/announcements/colu
 import { features } from "@/components/admin/announcements/features"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
-import { adminContent } from "@/data/admin-content"
+import { adminContent } from "@/data/mock/admin-content"
 import { currentUser } from "@/data/mock/user"
 import { mockAnnouncements } from "@/data/mock/admin-announcements"
 import { createAuditFields, touchAuditFields } from "@/types/audit"

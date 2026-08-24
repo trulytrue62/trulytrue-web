@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import { DotPattern } from "@/components/ui/dot-pattern"
-import { checkContent } from "@/data/check-content"
+import { checkContent } from "@/data/mock/check-content"
 import { analyzeMessage } from "@/data/mock/check-analysis"
 import { currentUser } from "@/data/mock/user"
 import { AssistantAvatar } from "@/components/check-chat/assistant-avatar"
